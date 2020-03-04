@@ -1,0 +1,65 @@
+03-04-2020 - Comments
+
+Definition of haiku:
+a Japanese poem of seventeen syllables, in three lines of five, seven, and five, traditionally evoking images of the natural world.
+
+Example of a haiku:
+An old silent pond...               (5 syllables)
+A frog jumps into the pond,         (7 syllables)
+splash! Silence again.              (5 syllables)
+
+(1) Beginning of state object
+    Definition of state: React components have a built-in state object. The state object is where you store property values that belongs to the component. When the state object changes, the component re-renders.
+
+(2) Word typed in by user will be stored in our app here
+
+(3) firstLine will be an array of objects that represents each word in our first line
+      Each object in this array will contain 2 properties:
+        (1) The word written
+        (2) The number of syllables of the word written
+      The same applies to secondLine and thirdLine
+
+(4) This function will run when the form is submitted by user
+
+(5) First AXIOS call (call to our API)
+      Goal of this call: We want to find out the number of syllables in our userInput (this.state.userInput)
+
+(6) Create an array that is a copy of our firstLine state property (this.state.firstLine)
+        Copy is necessary because we cannot manipulate state directly without using the function .setState()
+
+(7) We are adding an object into our firstLineCopy array
+    This object will contain 2 properties:
+    (1) The word written
+    (2) The number of syllables of the word written
+
+(8) Using our newly updated firstLineCopy array, we want to update our firstLine array in our state (this.state.firstLine)
+
+(9) Once our state is updated, call the getRelatedWords() function
+          This function takes a parameter = 'word'
+          We will pass in userInput as an argument to this function
+          The getRelatedWords function will grab us a list of words related to our word passed in (in this case, our word is this.state.userInput)
+
+(10) This function will run an AXIOS call that gets data related to the word passed in
+    Takes in one parameter = 'word'
+
+(11) Recall: response = data received from AXIOS call
+      What is the response?
+        The response is a set of data returned from our API that contains words related to the word passed into the getRelatedWords() function 
+      What do we want to do with the response?
+        We want to filter this data based on the number of syllables in each word
+
+(12) This filtering is done in the filterResults() function, so we must call it (line 90)
+
+(13) This function will take in a parameter called 'results', which is an array
+    'results' represents the data response received from our second AXIOS call (line 78)
+
+(14) Represents the sum of the syllables of each word in our firstLine object
+Example: If firstLine = [first, line, hello], then totalSyllablesSoFar = 4
+
+(15) Represents the maximum number of syllables our added word can have
+    Recall: The first line of a haiku MUST have 5 syllables
+
+(16) Goal: we want to populate the first line of our haiku with words, however those words must not take up more than 5 syllables
+    We want to create an array from our API data array ('results') that does NOT contain words that have syllables that will add to > 5
+
+(17) If the number of syllables in the word in our API data <= the maximum number of syllables our word can have (so that the total does not exceed 5), add the item to our filtered array

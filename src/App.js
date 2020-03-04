@@ -5,57 +5,80 @@ import axios from 'axios';
 class App extends Component {
   constructor() {
     super();
+
+    // 1
     this.state = {
-      userInput: '',
-      firstLine: [],
+      userInput: '', //2
+      firstLine: [], //3
       secondLine: [],
       thirdLine: []
     };
   }
+    
+    handleFormSubmit = (e) => { //4
+      e.preventDefault();
+      
+      axios({ //5
+        url: `https://api.datamuse.com/words?sp=${this.state.userInput}&md=s`,
+        method: 'GET',
+        responseType: 'json',
+      }).then((response)=> {
+        // Recall: response = data received from AXIOS call
+        
+        const firstLineCopy = [...this.state.firstLine]; //6
+        
+        firstLineCopy.push( 
+        // Recall: .push() adds items into our firstLineCopy array
+          {//7
+            word: this.state.userInput,
+            numSyllables: response.data[0].numSyllables
+          }
+        );
 
-  handleFormSubmit = (e) => {
-    e.preventDefault();
-
-    axios({
-      url: `https://api.datamuse.com/words?sp=${this.state.userInput}&md=s`,
-      method: 'GET',
-      responseType: 'json',
-    }).then((response)=> {
-      const firstLineCopy = [...this.state.firstLine];
-      firstLineCopy.push({
-        word: this.state.userInput,
-        numSyllables: response.data[0].numSyllables
-      });
-      this.setState({
-        firstLine: firstLineCopy
-      },
-        () => {
-          this.getRelatedWords(this.state.userInput);
-        }
-      );
+        this.setState({ //8
+          firstLine: firstLineCopy
+        },
+          //9
+          () => {
+            this.getRelatedWords(this.state.userInput);
+          }
+        );
     });
   }
 
+  //10
   getRelatedWords = (word) => {
     axios({
       url: `https://api.datamuse.com/words?rel_bga=${word}&md=s`,
       method: 'GET',
       responseType: 'json',
     }).then((response)=> {
+      //11
+        
+      //12
       this.filterResults(response.data);
     });
   }
 
   filterResults = (results) => {
+    //13
+
     const totalSyllablesSoFar = this.getSyllablesPerLine(this.state.firstLine);
+    //14
+
     const maxSyllablesAllowed = 5 - totalSyllablesSoFar;
+    //15
+
+    //16
     const filteredResults = results.filter((item) => {
       if (item.numSyllables <= maxSyllablesAllowed) {
+      //17
         return item;
       } else {
         return false;
       }
     });
+
     console.log(filteredResults);
   }
 
