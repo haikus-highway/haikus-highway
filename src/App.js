@@ -81,7 +81,6 @@ class App extends Component {
         
       //12
       this.filterResults(response.data);
-    
     });
   }
 
@@ -106,7 +105,6 @@ class App extends Component {
       }
     });
 
-
     console.log(filteredResults)
 
     let randomWords;
@@ -114,7 +112,7 @@ class App extends Component {
     if(filteredResults.length > 0){
       randomWords = randomizeWords(filteredResults);
     }else{
-      randomWords = []
+      randomWords = [];
     }
 
     this.setState({
@@ -144,6 +142,7 @@ class App extends Component {
     });
   }
 
+  // Word onClick function
   wordChosen = (item) => {
    const lineArrayCopy = [...this.state.firstLine]
 
@@ -183,7 +182,7 @@ class App extends Component {
         <div className="printedHaiku">
           {
             this.state.firstLine.map((item, index) => {
-              return <p>{item.word}</p>
+              return <p key={item.word + index}>{item.word}</p>
             })
           }
         </div>
