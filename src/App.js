@@ -1,6 +1,28 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
+import { getRandomIntInRangeExclusive } from './randomizers';
+import removeFromArray from './removeFromArray';
+
+const randomizeWords = (relatedWords) => {
+  const relatedWordsCopy = [...relatedWords];
+
+  const randomWords = [];
+
+  for (let i = 0; i < 10; i++){
+    // Find random index
+    const randomIndex = getRandomIntInRangeExclusive(0, relatedWordsCopy.length)
+
+    // Push random index of relatedWordsCopy array into randomWords array
+    randomWords.push(relatedWordsCopy[randomIndex])
+
+    // Remove random index from relatedWordsCopy array to prevent duplicates in randomWords array
+    removeFromArray(relatedWordsCopy[randomIndex], relatedWordsCopy)
+
+  }
+
+  return randomWords
+}
 
 class App extends Component {
   constructor() {
@@ -11,7 +33,9 @@ class App extends Component {
       userInput: '', //2
       firstLine: [], //3
       secondLine: [],
-      thirdLine: []
+      thirdLine: [],
+      allRelatedWords: [],
+      tenRelatedWords: []
     };
   }
     
@@ -57,6 +81,7 @@ class App extends Component {
         
       //12
       this.filterResults(response.data);
+    
     });
   }
 
@@ -79,23 +104,26 @@ class App extends Component {
       }
     });
 
-    console.log(filteredResults);
+    this.setState({
+      allRelatedWords: filteredResults,
+      tenRelatedWords: randomizeWords(filteredResults)
+    })
   }
 
   // Provide a line to check and get the total number of syllables within that line
-getSyllablesPerLine = (line) => {
-  // Line will be an array that is received from state
+  getSyllablesPerLine = (line) => {
+    // Line will be an array that is received from state
 
-  // initialize a sum variable to 0
-  let numberOfSyllablesLine = 0;
-  // Loop through each item in the line array provided
-  line.forEach((item)=> {
-    // Add the number of syllables in this word to the sum variable
-    numberOfSyllablesLine += item.numSyllables;
-  });
-  // Return the total sum of syllables
-  return numberOfSyllablesLine;
-}
+    // initialize a sum variable to 0
+    let numberOfSyllablesLine = 0;
+    // Loop through each item in the line array provided
+    line.forEach((item)=> {
+      // Add the number of syllables in this word to the sum variable
+      numberOfSyllablesLine += item.numSyllables;
+    });
+    // Return the total sum of syllables
+    return numberOfSyllablesLine;
+  }
 
   handleUserInput = (e) => {
     this.setState({
@@ -111,9 +139,13 @@ getSyllablesPerLine = (line) => {
           <input onChange={this.handleUserInput} type="text" id="userInput" name="userInput" />
           <button type="submit">Submit</button>
         </form>
-        <div>
-          <p></p>
-        </div>
+        <ul>
+          {
+            this.state.tenRelatedWords.map((item, index) => {
+              return <li key={item.word + item.index}><button>{item.word}</button></li>
+            })
+          }
+        </ul>
       </div>
     );
   }
