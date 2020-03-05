@@ -106,11 +106,20 @@ class App extends Component {
       }
     });
 
+
     console.log(filteredResults)
+
+    let randomWords;
+
+    if(filteredResults.length > 0){
+      randomWords = randomizeWords(filteredResults);
+    }else{
+      randomWords = []
+    }
 
     this.setState({
       allRelatedWords: filteredResults,
-      tenRelatedWords: randomizeWords(filteredResults)
+      tenRelatedWords: randomWords 
     })
   }
 
@@ -142,7 +151,11 @@ class App extends Component {
 
    this.setState({
      firstLine: lineArrayCopy
-   }, () => {console.log(this.state.firstLine)})
+   }, () => {
+     this.getRelatedWords(item.word)
+   })
+
+
   }
 
   render() {
@@ -155,13 +168,15 @@ class App extends Component {
         </form>
         <ul>
           {
-            this.state.tenRelatedWords.map((item, index) => {
-              return (
-                <li key={item.word + index}>
-                  <button onClick={() => this.wordChosen(item)}>{item.word}</button>
-                </li>
-              )
-            })
+            this.state.tenRelatedWords.length > 0 ?
+              this.state.tenRelatedWords.map((item, index) => {
+                return (
+                  <li key={item.word + index}>
+                    <button onClick={() => this.wordChosen(item)}>{item.word}</button>
+                  </li>
+                )
+            }) :
+              null
           }
         </ul>
 
