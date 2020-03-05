@@ -94,15 +94,19 @@ class App extends Component {
     const maxSyllablesAllowed = 5 - totalSyllablesSoFar;
     //15
 
+    const regex = /[a-z]/g;
+
     //16
     const filteredResults = results.filter((item) => {
-      if (item.numSyllables <= maxSyllablesAllowed) {
+      if (item.numSyllables <= maxSyllablesAllowed && item.word.match(regex)) {
       //17
         return item;
       } else {
         return false;
       }
     });
+
+    console.log(filteredResults)
 
     this.setState({
       allRelatedWords: filteredResults,
@@ -131,6 +135,16 @@ class App extends Component {
     });
   }
 
+  wordChosen = (item) => {
+   const lineArrayCopy = [...this.state.firstLine]
+
+   lineArrayCopy.push(item)
+
+   this.setState({
+     firstLine: lineArrayCopy
+   }, () => {console.log(this.state.firstLine)})
+  }
+
   render() {
     return (
       <div className="App">
@@ -142,10 +156,22 @@ class App extends Component {
         <ul>
           {
             this.state.tenRelatedWords.map((item, index) => {
-              return <li key={item.word + item.index}><button>{item.word}</button></li>
+              return (
+                <li key={item.word + index}>
+                  <button onClick={() => this.wordChosen(item)}>{item.word}</button>
+                </li>
+              )
             })
           }
         </ul>
+
+        <div className="printedHaiku">
+          {
+            this.state.firstLine.map((item, index) => {
+              return <p>{item.word}</p>
+            })
+          }
+        </div>
       </div>
     );
   }
