@@ -30,6 +30,16 @@ body{
   background: url(./assets/background.jpg);
   background-size: cover;
   background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  font-family: 'Barlow', sans-serif;
+  line-height: 1.6;
+}
+
+.wrapper{
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 80%;
 }
 
 .App{
@@ -42,3 +52,88 @@ body{
   color: white;
   font-size: 30px;
 }
+
+h1{
+  font-family: 'Merienda One', cursive;
+  margin: 0;
+  font-size: 125px;
+  text-shadow: 5px 5px #cdc4b9;
+}
+
+a{
+  text-decoration: none;
+  color: white;
+}
+
+/* Home styling */
+
+button{
+  padding: 10px 30px;
+  border-radius: 10px;
+  border: none;
+  margin: 0 20px;
+  background: rgba(0,0,0,0.75);
+  /* background: #545152; */
+  color: white;
+  margin-top: 20px;
+  transition: all 0.7s;
+  /* border: 1px dotted #cdc4b9; */
+}
+
+button:hover{
+  transform: scale(1.1);
+}
+
+/* Form styling */
+
+.form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form input{
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.5);
+  /* border: 1px solid grey; */
+  border: none;
+  margin: 20px 0;
+  color: white;
+}
+
+.form button{
+  padding: 10px;
+  border-radius: 10px;
+  width: 150px;
+}
+
+/* List styling */
+
+.relatedWords{
+  display: flex;
+  flex-wrap: wrap;
+  width: 50%;
+  margin: 20px 0;
+  padding: 0;
+}
+
+.relatedWords li{
+  list-style: none;
+  width: 20%;
+}
+
+.relatedWords button{
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: white;
+}
+
+
+
+/* font-family: 'Merienda One', cursive;
+
+font-family: 'Barlow', sans-serif; */
+
