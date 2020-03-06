@@ -11,13 +11,15 @@ const randomizeWords = (relatedWords) => {
 
   for (let i = 0; i < 10; i++) {
     // Find random index
-    const randomIndex = getRandomIntInRangeExclusive(0, relatedWordsCopy.length)
+    const randomIndex = getRandomIntInRangeExclusive(0, relatedWordsCopy.length);
 
     // Push random index of relatedWordsCopy array into randomWords array
-    randomWords.push(relatedWordsCopy[randomIndex])
+    if (relatedWordsCopy[randomIndex] !== undefined) {
+      randomWords.push(relatedWordsCopy[randomIndex]);
+    }
 
     // Remove random index from relatedWordsCopy array to prevent duplicates in randomWords array
-    removeFromArray(relatedWordsCopy[randomIndex], relatedWordsCopy)
+    removeFromArray(relatedWordsCopy[randomIndex], relatedWordsCopy);
 
   }
 
@@ -70,6 +72,13 @@ class App extends Component {
           this.getRelatedWords(this.state.userInput);
         }
       );
+    }).catch((error) => {
+      console.log(error);
+      alert('Try again!');
+      this.setState({
+        userInput: ''
+      });
+
     });
   }
 
@@ -151,6 +160,17 @@ class App extends Component {
     this.setState({
       userInput: e.target.value
     });
+    // this.spellCheck(e.target.value);
+  }
+
+  spellCheck = (input) => {
+    axios({
+      url: `https://api.datamuse.com/sug?s=${input}`,
+      method: 'GET',
+      responseType: 'json'
+    }).then((response)=> {
+      console.log(response.data);
+    })
   }
 
   // Word onClick function
@@ -202,13 +222,14 @@ class App extends Component {
       <div className="App">
         <form onSubmit={this.handleFormSubmit} action="submit" className="form">
           <label htmlFor="userInput">Type a word:</label>
-          <input onChange={this.handleUserInput} type="text" id="userInput" name="userInput" />
+          <input onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$" value={this.state.userInput}/>
           <button type="submit">Submit</button>
         </form>
         <ul className="relatedWords">
           {
-            this.state.totalSyllables < 17 ?
+            this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
               this.state.tenRelatedWords.map((item, index) => {
+                console.log(item);
                 return (
                   <li key={item.word + index}>
                     <button className="chosenWord" onClick={() => this.wordChosen(item)}>{item.word}</button>
