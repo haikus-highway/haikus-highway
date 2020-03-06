@@ -31,3 +31,14 @@ body{
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+.App{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  font-size: 30px;
+}
