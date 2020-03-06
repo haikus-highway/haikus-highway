@@ -53,7 +53,11 @@ class App extends Component {
       responseType: 'json',
     }).then((response) => {
       // Recall: response = data received from AXIOS call
-      if (response.data[0].word === this.state.userInput) {
+      const totalSyllablesSoFar = this.getSyllablesPerLine(this.state.currentLine);
+      const maxSyllablesAllowed = this.checkMaxSyllablesAllowed(totalSyllablesSoFar);
+
+      if (response.data[0].word === this.state.userInput && response.data[0].numSyllables <= maxSyllablesAllowed) {
+
         const currentLineCopy = [...this.state.currentLine]; //6
   
         currentLineCopy.push(
@@ -74,10 +78,14 @@ class App extends Component {
             this.getRelatedWords(this.state.userInput);
           }
         );
+      } else {
+        alert('Either you misspelled or entered too many syllables');
+        this.setState({
+          userInput: ''
+        });
       }
     }).catch((error) => {
-      console.log(error);
-      alert('Try again!');
+      alert("This word doesn't exist");
       this.setState({
         userInput: ''
       });
@@ -106,20 +114,31 @@ class App extends Component {
     });
   }
 
+  checkMaxSyllablesAllowed = (syllablesSoFar) => {
+    let maxSyllablesAllowed;
+
+    if (this.state.totalSyllables < 5 || this.state.totalSyllables >= 12) {
+      maxSyllablesAllowed = 5 - syllablesSoFar;
+    } else {
+      maxSyllablesAllowed = 7 - syllablesSoFar;
+    }
+    return maxSyllablesAllowed;
+  }
+
   filterResults = (results) => {
     //13
 
     const totalSyllablesSoFar = this.getSyllablesPerLine(this.state.currentLine);
 
     //14
-    let maxSyllablesAllowed;
+    const maxSyllablesAllowed = this.checkMaxSyllablesAllowed(totalSyllablesSoFar);
+    // let maxSyllablesAllowed;
 
-    if (this.state.totalSyllables < 5 || this.state.totalSyllables >= 12) {
-
-      maxSyllablesAllowed = 5 - totalSyllablesSoFar;
-    } else {
-      maxSyllablesAllowed = 7 - totalSyllablesSoFar;
-    }
+    // if (this.state.totalSyllables < 5 || this.state.totalSyllables >= 12) {
+    //   maxSyllablesAllowed = 5 - totalSyllablesSoFar;
+    // } else {
+    //   maxSyllablesAllowed = 7 - totalSyllablesSoFar;
+    // }
     //15
 
     const regex = /[a-z]/g;
@@ -241,7 +260,6 @@ class App extends Component {
           {
             this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
               this.state.tenRelatedWords.map((item, index) => {
-                console.log(item);
                 return (
                   <li key={item.word + index}>
                     <button className="chosenWord" onClick={() => this.wordChosen(item)}>{item.word}</button>
