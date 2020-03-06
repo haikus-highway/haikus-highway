@@ -219,7 +219,7 @@ class App extends Component {
         <form onSubmit={this.handleFormSubmit} action="submit" className="form">
           <label className="visuallyHidden" htmlFor="userInput">Type a word:</label>
           <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" />
-          {/* <button type="submit">Submit</button> */}
+          <button type="submit">Submit</button>
         </form>
         <ul className="relatedWords">
           {
