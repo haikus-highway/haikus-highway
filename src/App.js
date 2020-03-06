@@ -35,7 +35,9 @@ class App extends Component {
       secondLine: [],
       thirdLine: [],
       allRelatedWords: [],
-      tenRelatedWords: []
+      tenRelatedWords: [],
+      currentLine: [],
+      totalSyllables: 0,
     };
   }
     
@@ -49,10 +51,10 @@ class App extends Component {
       }).then((response)=> {
         // Recall: response = data received from AXIOS call
         
-        const firstLineCopy = [...this.state.firstLine]; //6
+        const currentLineCopy = [...this.state.currentLine]; //6
         
-        firstLineCopy.push( 
-        // Recall: .push() adds items into our firstLineCopy array
+        currentLineCopy.push( 
+        // Recall: .push() adds items into our currentLineCopy array
           {//7
             word: this.state.userInput,
             numSyllables: response.data[0].numSyllables
@@ -60,7 +62,8 @@ class App extends Component {
         );
 
         this.setState({ //8
-          firstLine: firstLineCopy
+          currentLine: currentLineCopy,
+          totalSyllables: this.state.totalSyllables + response.data[0].numSyllables,
         },
           //9
           () => {
@@ -87,10 +90,17 @@ class App extends Component {
   filterResults = (results) => {
     //13
 
-    const totalSyllablesSoFar = this.getSyllablesPerLine(this.state.firstLine);
-    //14
+    const totalSyllablesSoFar = this.getSyllablesPerLine(this.state.currentLine);
 
-    const maxSyllablesAllowed = 5 - totalSyllablesSoFar;
+    //14
+    let maxSyllablesAllowed;
+
+    if (this.state.totalSyllables < 5 || this.state.totalSyllables >= 12) {
+
+      maxSyllablesAllowed = 5 - totalSyllablesSoFar;
+    } else {
+      maxSyllablesAllowed = 7 - totalSyllablesSoFar;
+    }
     //15
 
     const regex = /[a-z]/g;
@@ -105,7 +115,7 @@ class App extends Component {
       }
     });
 
-    console.log(filteredResults)
+    // console.log(filteredResults)
 
     let randomWords;
 
@@ -144,17 +154,41 @@ class App extends Component {
 
   // Word onClick function
   wordChosen = (item) => {
-   const lineArrayCopy = [...this.state.firstLine]
 
-   lineArrayCopy.push(item)
+    // const syllablesSoFar = this.getSyllablesPerLine(this.state.currentLine);
+    let firstLineCopy = [...this.state.firstLine];
+    let secondLineCopy = [...this.state.secondLine];
+    let thirdLineCopy = [...this.state.thirdLine];
+
+    let lineArrayCopy = [...this.state.currentLine];
+    lineArrayCopy.push(item);
+
+    let totalSyllablesCopy = this.state.totalSyllables + item.numSyllables;
+    
+    //if the current line is line one, and syllables so far is five, then move to line two and update the current line to two
+    if (totalSyllablesCopy === 5) {
+      //when we've reached our cap, push the array to first line, reset current line to an empty array
+      firstLineCopy = [...lineArrayCopy];
+      lineArrayCopy = [];
+      console.log(firstLineCopy);
+      
+    } else if (totalSyllablesCopy === 12) {
+      secondLineCopy = [...lineArrayCopy];
+      lineArrayCopy = [];
+    } else if (totalSyllablesCopy === 17) {
+      thirdLineCopy = [...lineArrayCopy];
+      lineArrayCopy = [];
+    }
 
    this.setState({
-     firstLine: lineArrayCopy
+     currentLine: lineArrayCopy,
+     firstLine: firstLineCopy,
+     secondLine: secondLineCopy,
+     thirdLine: thirdLineCopy,
+    totalSyllables: totalSyllablesCopy,
    }, () => {
      this.getRelatedWords(item.word)
    })
-
-
   }
 
   render() {
