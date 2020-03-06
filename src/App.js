@@ -9,7 +9,7 @@ const randomizeWords = (relatedWords) => {
 
   const randomWords = [];
 
-  for (let i = 0; i < 10; i++){
+  for (let i = 0; i < 10; i++) {
     // Find random index
     const randomIndex = getRandomIntInRangeExclusive(0, relatedWordsCopy.length)
 
@@ -40,36 +40,36 @@ class App extends Component {
       totalSyllables: 0,
     };
   }
-    
-    handleFormSubmit = (e) => { //4
-      e.preventDefault();
-      
-      axios({ //5
-        url: `https://api.datamuse.com/words?sp=${this.state.userInput}&md=s`,
-        method: 'GET',
-        responseType: 'json',
-      }).then((response)=> {
-        // Recall: response = data received from AXIOS call
-        
-        const currentLineCopy = [...this.state.currentLine]; //6
-        
-        currentLineCopy.push( 
-        // Recall: .push() adds items into our currentLineCopy array
-          {//7
-            word: this.state.userInput,
-            numSyllables: response.data[0].numSyllables
-          }
-        );
 
-        this.setState({ //8
-          currentLine: currentLineCopy,
-          totalSyllables: this.state.totalSyllables + response.data[0].numSyllables,
-        },
-          //9
-          () => {
-            this.getRelatedWords(this.state.userInput);
-          }
-        );
+  handleFormSubmit = (e) => { //4
+    e.preventDefault();
+
+    axios({ //5
+      url: `https://api.datamuse.com/words?sp=${this.state.userInput}&md=s`,
+      method: 'GET',
+      responseType: 'json',
+    }).then((response) => {
+      // Recall: response = data received from AXIOS call
+
+      const currentLineCopy = [...this.state.currentLine]; //6
+
+      currentLineCopy.push(
+        // Recall: .push() adds items into our currentLineCopy array
+        {//7
+          word: this.state.userInput,
+          numSyllables: response.data[0].numSyllables
+        }
+      );
+
+      this.setState({ //8
+        currentLine: currentLineCopy,
+        totalSyllables: this.state.totalSyllables + response.data[0].numSyllables,
+      },
+        //9
+        () => {
+          this.getRelatedWords(this.state.userInput);
+        }
+      );
     });
   }
 
@@ -79,9 +79,9 @@ class App extends Component {
       url: `https://api.datamuse.com/words?rel_bga=${word}&md=s`,
       method: 'GET',
       responseType: 'json',
-    }).then((response)=> {
+    }).then((response) => {
       //11
-        
+
       //12
       this.filterResults(response.data);
     });
@@ -108,7 +108,7 @@ class App extends Component {
     //16
     const filteredResults = results.filter((item) => {
       if (item.numSyllables <= maxSyllablesAllowed && item.word.match(regex)) {
-      //17
+        //17
         return item;
       } else {
         return false;
@@ -119,15 +119,15 @@ class App extends Component {
 
     let randomWords;
 
-    if(filteredResults.length > 0){
+    if (filteredResults.length > 0) {
       randomWords = randomizeWords(filteredResults);
-    }else{
+    } else {
       randomWords = [];
     }
 
     this.setState({
       allRelatedWords: filteredResults,
-      tenRelatedWords: randomWords 
+      tenRelatedWords: randomWords
     })
   }
 
@@ -138,7 +138,7 @@ class App extends Component {
     // initialize a sum variable to 0
     let numberOfSyllablesLine = 0;
     // Loop through each item in the line array provided
-    line.forEach((item)=> {
+    line.forEach((item) => {
       // Add the number of syllables in this word to the sum variable
       numberOfSyllablesLine += item.numSyllables;
     });
@@ -164,14 +164,14 @@ class App extends Component {
     lineArrayCopy.push(item);
 
     let totalSyllablesCopy = this.state.totalSyllables + item.numSyllables;
-    
+
     //if the current line is line one, and syllables so far is five, then move to line two and update the current line to two
     if (totalSyllablesCopy === 5) {
       //when we've reached our cap, push the array to first line, reset current line to an empty array
       firstLineCopy = [...lineArrayCopy];
       lineArrayCopy = [];
       console.log(firstLineCopy);
-      
+
     } else if (totalSyllablesCopy === 12) {
       secondLineCopy = [...lineArrayCopy];
       lineArrayCopy = [];
@@ -180,21 +180,21 @@ class App extends Component {
       lineArrayCopy = [];
     }
 
-   this.setState({
-     currentLine: lineArrayCopy,
-     firstLine: firstLineCopy,
-     secondLine: secondLineCopy,
-     thirdLine: thirdLineCopy,
-    totalSyllables: totalSyllablesCopy,
-   }, () => {
-     this.getRelatedWords(item.word)
-   })
+    this.setState({
+      currentLine: lineArrayCopy,
+      firstLine: firstLineCopy,
+      secondLine: secondLineCopy,
+      thirdLine: thirdLineCopy,
+      totalSyllables: totalSyllablesCopy,
+    }, () => {
+      this.getRelatedWords(item.word)
+    })
   }
 
   render() {
     return (
       <div className="App">
-        <form onSubmit={this.handleFormSubmit} action="submit"> 
+        <form onSubmit={this.handleFormSubmit} action="submit">
           <label htmlFor="userInput">Type a word:</label>
           <input onChange={this.handleUserInput} type="text" id="userInput" name="userInput" />
           <button type="submit">Submit</button>
@@ -208,17 +208,66 @@ class App extends Component {
                     <button onClick={() => this.wordChosen(item)}>{item.word}</button>
                   </li>
                 )
-            }) :
+              }) :
               null
           }
         </ul>
 
+
+
         <div className="printedHaiku">
+
           {
-            this.state.firstLine.map((item, index) => {
-              return <p key={item.word + index}>{item.word}</p>
-            })
+
+            this.state.firstLine.length > 0 ?
+              <p>
+                {
+                  this.state.firstLine.map((item, index) => {
+                    return <span key={item.word + index}>{item.word} </span>
+                  })
+                }
+              </p>
+              : null
           }
+
+          {
+
+            this.state.secondLine.length > 0 ?
+              <p>
+                {
+                  this.state.secondLine.map((item, index) => {
+                    return <span key={item.word + index}>{item.word} </span>
+                  })
+                }
+              </p>
+              : null
+          }
+
+          {
+
+            this.state.thirdLine.length > 0 ?
+              <p>
+                {
+                  this.state.thirdLine.map((item, index) => {
+                    return <span key={item.word + index}>{item.word} </span>
+                  })
+                }
+              </p>
+              : null
+          }
+          {
+
+            this.state.currentLine.length > 0 ?
+              <p>
+                {
+                  this.state.currentLine.map((item, index) => {
+                    return <span key={item.word + index}>{item.word} </span>
+                  })
+                }
+              </p>
+              : null
+          }
+
         </div>
       </div>
     );
