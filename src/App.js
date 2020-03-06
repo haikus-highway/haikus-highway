@@ -40,6 +40,7 @@ class App extends Component {
       tenRelatedWords: [],
       currentLine: [],
       totalSyllables: 0,
+      formVisible: true
     };
   }
 
@@ -52,26 +53,28 @@ class App extends Component {
       responseType: 'json',
     }).then((response) => {
       // Recall: response = data received from AXIOS call
-
-      const currentLineCopy = [...this.state.currentLine]; //6
-
-      currentLineCopy.push(
-        // Recall: .push() adds items into our currentLineCopy array
-        {//7
-          word: this.state.userInput,
-          numSyllables: response.data[0].numSyllables
-        }
-      );
-
-      this.setState({ //8
-        currentLine: currentLineCopy,
-        totalSyllables: this.state.totalSyllables + response.data[0].numSyllables,
-      },
-        //9
-        () => {
-          this.getRelatedWords(this.state.userInput);
-        }
-      );
+      if (response.data[0].word === this.state.userInput) {
+        const currentLineCopy = [...this.state.currentLine]; //6
+  
+        currentLineCopy.push(
+          // Recall: .push() adds items into our currentLineCopy array
+          {//7
+            word: this.state.userInput,
+            numSyllables: response.data[0].numSyllables
+          }
+        );
+  
+        this.setState({ //8
+          currentLine: currentLineCopy,
+          totalSyllables: this.state.totalSyllables + response.data[0].numSyllables,
+          formVisible: false,
+        },
+          //9
+          () => {
+            this.getRelatedWords(this.state.userInput);
+          }
+        );
+      }
     }).catch((error) => {
       console.log(error);
       alert('Try again!');
@@ -92,8 +95,14 @@ class App extends Component {
       //11
 
       //12
-      this.filterResults(response.data);
-      console.log(response.data);
+      if (response.data.length === 0) {
+        this.setState({
+          formVisible: true,
+          userInput: ''
+        });
+      } else {
+        this.filterResults(response.data);
+      }
     });
   }
 
@@ -137,7 +146,8 @@ class App extends Component {
 
     this.setState({
       allRelatedWords: filteredResults,
-      tenRelatedWords: randomWords
+      tenRelatedWords: randomWords,
+      userInput: ''
     })
   }
 
@@ -211,8 +221,6 @@ class App extends Component {
     }, () => {
       if (this.state.totalSyllables < 17) {
         this.getRelatedWords(item.word)
-        console.log("done");
-
       }
     })
   }
@@ -220,11 +228,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <form onSubmit={this.handleFormSubmit} action="submit" className="form">
-          <label htmlFor="userInput">Type a word:</label>
-          <input onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$" value={this.state.userInput}/>
-          <button type="submit">Submit</button>
-        </form>
+        {
+          this.state.formVisible ?
+          <form onSubmit={this.handleFormSubmit} action="submit" className="form">
+            <label htmlFor="userInput">Type a word:</label>
+            <input onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$" value={this.state.userInput}/>
+            <button type="submit">Submit</button>
+          </form>
+          : null
+        }
         <ul className="relatedWords">
           {
             this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
