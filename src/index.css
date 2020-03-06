@@ -34,6 +34,7 @@ body{
   padding: 0;
   font-family: 'Barlow', sans-serif;
   line-height: 1.6;
+  letter-spacing: 1.5px;
 }
 
 .wrapper{
@@ -42,13 +43,20 @@ body{
   width: 80%;
 }
 
+.root {
+
+  background: rgba(0,0,0,0.5);
+
+
+}
+
 .App{
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,0.5);
+  
   color: white;
   font-size: 30px;
 }
@@ -73,9 +81,12 @@ button{
   border: none;
   margin: 0 20px;
   background: rgba(0,0,0,0.75);
+  /* text-transform: uppercase; */
+  /* font-size: 16px; */
+  letter-spacing: 1.5px;
   /* background: #545152; */
   color: white;
-  margin-top: 20px;
+  
   transition: all 0.7s;
   /* border: 1px dotted #cdc4b9; */
 }
@@ -84,23 +95,35 @@ button:hover{
   transform: scale(1.1);
 }
 
+.homeButton {
+
+  margin: 20px;
+}
+
 /* Form styling */
 
 .form{
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
+  padding: 20px 20px 20px 40px;
+  border-radius: 10px;
+  width:100%;
+  justify-content: center;
+  
+
+  background: rgba(0,0,0,0.5);
 }
 
 .form input{
   text-align: center;
   padding: 10px;
-  border-radius: 10px;
-  background: rgba(0,0,0,0.5);
-  /* border: 1px solid grey; */
+  /* border-radius: 10px; */
   border: none;
+  /* border-bottom: 2px solid white; */
   margin: 20px 0;
   color: white;
+  background-color: transparent;
 }
 
 .form button{
