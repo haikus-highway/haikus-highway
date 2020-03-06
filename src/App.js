@@ -84,6 +84,7 @@ class App extends Component {
 
       //12
       this.filterResults(response.data);
+      console.log(response.data);
     });
   }
 
@@ -186,8 +187,13 @@ class App extends Component {
       secondLine: secondLineCopy,
       thirdLine: thirdLineCopy,
       totalSyllables: totalSyllablesCopy,
+      // tenRelatedWords: []
     }, () => {
-      this.getRelatedWords(item.word)
+      if (this.state.totalSyllables < 17) {
+        this.getRelatedWords(item.word)
+        console.log("done");
+
+      }
     })
   }
 
@@ -201,7 +207,7 @@ class App extends Component {
         </form>
         <ul>
           {
-            this.state.tenRelatedWords.length > 0 ?
+            this.state.totalSyllables < 17 ?
               this.state.tenRelatedWords.map((item, index) => {
                 return (
                   <li key={item.word + index}>
