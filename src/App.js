@@ -200,18 +200,18 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <form onSubmit={this.handleFormSubmit} action="submit">
+        <form onSubmit={this.handleFormSubmit} action="submit" className="form">
           <label htmlFor="userInput">Type a word:</label>
           <input onChange={this.handleUserInput} type="text" id="userInput" name="userInput" />
           <button type="submit">Submit</button>
         </form>
-        <ul>
+        <ul className="relatedWords">
           {
             this.state.totalSyllables < 17 ?
               this.state.tenRelatedWords.map((item, index) => {
                 return (
                   <li key={item.word + index}>
-                    <button onClick={() => this.wordChosen(item)}>{item.word}</button>
+                    <button className="chosenWord" onClick={() => this.wordChosen(item)}>{item.word}</button>
                   </li>
                 )
               }) :
@@ -226,7 +226,7 @@ class App extends Component {
           {
 
             this.state.firstLine.length > 0 ?
-              <p>
+              <p className="line firstLine">
                 {
                   this.state.firstLine.map((item, index) => {
                     return <span key={item.word + index}>{item.word} </span>
@@ -239,7 +239,7 @@ class App extends Component {
           {
 
             this.state.secondLine.length > 0 ?
-              <p>
+              <p className="line secondLine">
                 {
                   this.state.secondLine.map((item, index) => {
                     return <span key={item.word + index}>{item.word} </span>
@@ -252,7 +252,7 @@ class App extends Component {
           {
 
             this.state.thirdLine.length > 0 ?
-              <p>
+              <p className="line thirdLine">
                 {
                   this.state.thirdLine.map((item, index) => {
                     return <span key={item.word + index}>{item.word} </span>
@@ -264,7 +264,7 @@ class App extends Component {
           {
 
             this.state.currentLine.length > 0 ?
-              <p>
+              <p className="line currentLine">
                 {
                   this.state.currentLine.map((item, index) => {
                     return <span key={item.word + index}>{item.word} </span>
