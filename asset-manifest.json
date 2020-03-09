@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/haikus-highway/static/css/main.2efd75db.chunk.css",
-    "main.js": "/haikus-highway/static/js/main.ca949c32.chunk.js",
-    "main.js.map": "/haikus-highway/static/js/main.ca949c32.chunk.js.map",
+    "main.css": "/haikus-highway/static/css/main.ad626f20.chunk.css",
+    "main.js": "/haikus-highway/static/js/main.1c751d00.chunk.js",
+    "main.js.map": "/haikus-highway/static/js/main.1c751d00.chunk.js.map",
     "runtime-main.js": "/haikus-highway/static/js/runtime-main.7e66e215.js",
     "runtime-main.js.map": "/haikus-highway/static/js/runtime-main.7e66e215.js.map",
     "static/js/2.82e7dfb6.chunk.js": "/haikus-highway/static/js/2.82e7dfb6.chunk.js",
     "static/js/2.82e7dfb6.chunk.js.map": "/haikus-highway/static/js/2.82e7dfb6.chunk.js.map",
     "index.html": "/haikus-highway/index.html",
-    "precache-manifest.155a3e9a31f944be71abb5996f03e8ab.js": "/haikus-highway/precache-manifest.155a3e9a31f944be71abb5996f03e8ab.js",
+    "precache-manifest.d446ba8daa690b44053e750b9ff462a6.js": "/haikus-highway/precache-manifest.d446ba8daa690b44053e750b9ff462a6.js",
     "service-worker.js": "/haikus-highway/service-worker.js",
-    "static/css/main.2efd75db.chunk.css.map": "/haikus-highway/static/css/main.2efd75db.chunk.css.map",
+    "static/css/main.ad626f20.chunk.css.map": "/haikus-highway/static/css/main.ad626f20.chunk.css.map",
     "static/js/2.82e7dfb6.chunk.js.LICENSE.txt": "/haikus-highway/static/js/2.82e7dfb6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7e66e215.js",
     "static/js/2.82e7dfb6.chunk.js",
-    "static/css/main.2efd75db.chunk.css",
-    "static/js/main.ca949c32.chunk.js"
+    "static/css/main.ad626f20.chunk.css",
+    "static/js/main.1c751d00.chunk.js"
   ]
 }
