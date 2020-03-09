@@ -19,7 +19,7 @@ class App extends Component {
       currentLine: [],
       totalSyllables: 0,
       formVisible: false,
-      headerVisible: true
+      headerVisible: true,
       suggestions: [],
       inputTextValue: ''
 
@@ -297,7 +297,7 @@ class App extends Component {
 
       <div className="App">
 
-        <div className="right-half">
+        <div className="rightHalf">
           {
             this.state.headerVisible ?
             <header>
@@ -313,127 +313,123 @@ class App extends Component {
                   <button className="homeButton">
                     Haiku Log
                   </button>
-              </div>
+                </div>
               </div>
             </header>
             : null
           }
 
-          {
-          this.state.formVisible ?
-          <form onSubmit={this.handleFormSubmit} action="submit" className="form wrapper">
-            <label className="visuallyHidden" htmlFor="userInput">Type a word:</label>
-            <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$" autoComplete="off" value={this.state.inputTextValue} />
-            <button type="submit">Submit</button>
-          </form>
-          : null
+        {
+            this.state.formVisible ?
+            <form onSubmit={this.handleFormSubmit} action="submit" className="form wrapper">
+              <label className="visuallyHidden" htmlFor="userInput">Type a word:</label>
+              <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$" autoComplete="off" value={this.state.inputTextValue} />
+              <button type="submit">Submit</button>
+            </form>
+            : null
         }
       
-      {
-          this.state.formVisible && this.state.suggestions.length > 0 ?
-            <div className="autoCompleteSuggestions">
-              <ul>
-                {
-                  this.state.suggestions.map((suggestion, index)=> {
-                    return (
-                      <li key={suggestion + index}>
-                        <button onClick={ ()=> this.chooseSuggestedWord(suggestion.word) }>{suggestion.word}</button>
-                      </li>
-                    );
-                  })
-                }
-              </ul>
+        {
+            this.state.formVisible && this.state.suggestions.length > 0 ?
+              <div className="autoCompleteSuggestions">
+                <ul>
+                  {
+                    this.state.suggestions.map((suggestion, index)=> {
+                      return (
+                        <li key={suggestion + index}>
+                          <button onClick={ ()=> this.chooseSuggestedWord(suggestion.word) }>{suggestion.word}</button>
+                        </li>
+                      );
+                    })
+                  }
+                </ul>
 
-          </div>
-        : null
+            </div>
+          : null
         }
 
-          <div className="wrapper">
-            <ul className="relatedWords">
-              {
-                this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
-                  this.state.tenRelatedWords.map((item, index) => {
-                    return (
-                      <div key={item.word + index}>
-                        <li>
-                          <button className="chosenWord" onClick={() => this.wordChosen(item)}>{item.word}</button>
-                        </li>
-                      </div>
-                    )
-                  }) :
-                  null
-              }
-                  
-              {
-                  this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
-                    <div className="moreWordsButton">
-                      <button onClick={this.moreWords}>More words</button>
+        <div className="wrapper">
+          <ul className="relatedWords">
+            {
+              this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
+                this.state.tenRelatedWords.map((item, index) => {
+                  return (
+                    <div key={item.word + index}>
+                      <li>
+                        <button className="chosenWord" onClick={() => this.wordChosen(item)}>{item.word}</button>
+                      </li>
                     </div>
-                  : null
-              }
-            </ul>
-              
-
-          </div>
-        </div>
-
-
-
-        <div className="printedHaiku wrapper">
-
-          {
-
-            this.state.firstLine.length > 0 ?
-              <p className="line firstLine">
-                {
-                  this.state.firstLine.map((item, index) => {
-                    return <span key={item.word + index}>{item.word} </span>
-                  })
-                }
-              </p>
-              : null
-          }
-
-          {
-
-            this.state.secondLine.length > 0 ?
-              <p className="line secondLine">
-                {
-                  this.state.secondLine.map((item, index) => {
-                    return <span key={item.word + index}>{item.word} </span>
-                  })
-                }
-              </p>
-              : null
-          }
-
-          {
-
-            this.state.thirdLine.length > 0 ?
-              <p className="line thirdLine">
-                {
-                  this.state.thirdLine.map((item, index) => {
-                    return <span key={item.word + index}>{item.word} </span>
-                  })
-                }
-              </p>
-              : null
-          }
-          {
-
-            this.state.currentLine.length > 0 ?
-              <p className="line currentLine underline">
-                {
-                  this.state.currentLine.map((item, index) => {
-                    return <span key={item.word + index}>{item.word} </span>
-                  })
-                }
-              </p>
-              : null
-          }
+                  )
+                }) :
+                null
+            }
+                
+            {
+                this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
+                  <div className="moreWordsButton">
+                    <button onClick={this.moreWords}>More words</button>
+                  </div>
+                : null
+            }
+          </ul>
 
         </div>
+
       </div>
+
+      <div className="printedHaiku wrapper">
+
+        {
+          this.state.firstLine.length > 0 ?
+            <p className="line firstLine">
+              {
+                this.state.firstLine.map((item, index) => {
+                  return <span key={item.word + index}>{item.word} </span>
+                })
+              }
+            </p>
+            : null
+        }
+
+        {
+
+          this.state.secondLine.length > 0 ?
+            <p className="line secondLine">
+              {
+                this.state.secondLine.map((item, index) => {
+                  return <span key={item.word + index}>{item.word} </span>
+                })
+              }
+            </p>
+            : null
+        }
+
+        {
+          this.state.thirdLine.length > 0 ?
+            <p className="line thirdLine">
+              {
+                this.state.thirdLine.map((item, index) => {
+                  return <span key={item.word + index}>{item.word} </span>
+                })
+              }
+            </p>
+            : null
+        }
+        
+        {
+          this.state.currentLine.length > 0 ?
+            <p className="line currentLine underline">
+              {
+                this.state.currentLine.map((item, index) => {
+                  return <span key={item.word + index}>{item.word} </span>
+                })
+              }
+            </p>
+            : null
+        }
+
+      </div>
+    </div>
     );
   }
 }
