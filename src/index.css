@@ -182,8 +182,14 @@ button:hover{
   justify-content: center;
 }
 
+
 .autoCompleteSuggestions {
   background-color: #cdc4b9;
+}
+
+.underline {
+  font-style: italic;
+  color: #545152;
 }
 
 .autoCompleteSuggestions button {
