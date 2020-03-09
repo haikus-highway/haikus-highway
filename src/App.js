@@ -40,7 +40,7 @@ class App extends Component {
       tenRelatedWords: [],
       currentLine: [],
       totalSyllables: 0,
-      formVisible: true
+      formVisible: false
     };
   }
 
@@ -255,45 +255,50 @@ class App extends Component {
   render() {
     return (
 
-      <div className="App wrapper">
-        {/* <header>
-          <h1>HaikYou</h1>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo ex ut doloremque iste excepturi sit officiis odit quisquam quasi suscipit neque soluta, esse commodi nesciunt, ipsa nemo labore illum veniam.</p>
+      <div className="App">
 
-          <div className="homeButtonDiv">
-            <button className="homeButton">
-              <a href="">Journal</a>
-            </button>
+        <div className="right-half">
+          <header>
+            <div className="wrapper">
+              <h1>HaikYou</h1>
+              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo ex ut doloremque iste excepturi sit officiis odit quisquam quasi suscipit neque soluta, esse commodi nesciunt, ipsa nemo labore illum veniam.</p>
 
-            <button className="homeButton">
-              <a href="">Haiku Log</a>
-            </button>
-          </div>
+              <div className="homeButtonDiv">
+                <button className="homeButton">
+                  <a href="">Journal</a>
+                </button>
 
-        </header> */}
-      {
-        this.state.formVisible ?
-        <form onSubmit={this.handleFormSubmit} action="submit" className="form">
-          <label className="visuallyHidden" htmlFor="userInput">Type a word:</label>
-              <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$"/>
-          <button type="submit">Submit</button>
-        </form>
-        : null
-       }
+                <button className="homeButton">
+                  <a href="">Haiku Log</a>
+                </button>
+            </div>
+            </div>
+          </header>
 
-        <ul className="relatedWords">
-          {
-            this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
-              this.state.tenRelatedWords.map((item, index) => {
-                return (
-                  <li key={item.word + index}>
-                    <button className="chosenWord" onClick={() => this.wordChosen(item)}>{item.word}</button>
-                  </li>
-                )
-              }) :
-              null
-          }
-        </ul>
+        {
+          this.state.formVisible ?
+          <form onSubmit={this.handleFormSubmit} action="submit" className="form wrapper">
+            <label className="visuallyHidden" htmlFor="userInput">Type a word:</label>
+                <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$"/>
+            <button type="submit">Submit</button>
+          </form>
+          : null
+        }
+
+          <ul className="relatedWords">
+            {
+              this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
+                this.state.tenRelatedWords.map((item, index) => {
+                  return (
+                    <li key={item.word + index}>
+                      <button className="chosenWord" onClick={() => this.wordChosen(item)}>{item.word}</button>
+                    </li>
+                  )
+                }) :
+                null
+            }
+          </ul>
+        </div>
 
 
 

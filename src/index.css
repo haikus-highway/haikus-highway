@@ -28,9 +28,9 @@ img{
 
 body{
   /* background: url(./assets/background.jpg); */
-  background: grey;
-  background-size: cover;
-  background-repeat: no-repeat;
+  /* background: grey; */
+  /* background-size: cover; */
+  /* background-repeat: no-repeat; */
   margin: 0;
   padding: 0;
   font-family: 'Barlow', sans-serif;
@@ -44,28 +44,45 @@ body{
   width: 80%;
 }
 
-.root {
-
-  background: rgba(0,0,0,0.5);
-
-
-}
-
 .App{
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   
   color: white;
   font-size: 30px;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+header{
+  /* background: #bcbca6;
+  width: 50%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  justify-content: center;
+  text-align: left; */
+}
+
+.right-half{
+background: #bcbca6;
+  width: 50%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  justify-content: center;
+  text-align: left;
 }
 
 h1{
   font-family: 'Merienda One', cursive;
   margin: 0;
-  font-size: 125px;
+  font-size: 75px;
   text-shadow: 5px 5px #cdc4b9;
 }
 
@@ -80,7 +97,7 @@ button{
   padding: 10px 30px;
   border-radius: 10px;
   border: none;
-  margin: 0 20px;
+  /* margin: 0 20px; */
   background: rgba(0,0,0,0.75);
   /* text-transform: uppercase; */
   /* font-size: 16px; */
@@ -98,7 +115,7 @@ button:hover{
 
 .homeButton {
 
-  margin: 20px;
+  /* margin: 20px; */
 }
 
 /* Form styling */
@@ -107,17 +124,14 @@ button:hover{
   display: flex;
   /* flex-direction: column; */
   align-items: center;
-  padding: 20px 20px 20px 40px;
+  /* padding: 20px 20px 20px 40px; */
   border-radius: 10px;
-  width:100%;
-  justify-content: center;
-  
-
-  background: rgba(0,0,0,0.5);
+  /* width:100%; */
+  /* justify-content: center; */
 }
 
 .form input{
-  text-align: center;
+  /* text-align: center; */
   padding: 10px;
   /* border-radius: 10px; */
   border: none;
@@ -153,6 +167,15 @@ button:hover{
   background: rgba(0,0,0,0.5);
   border: none;
   color: white;
+}
+
+.printedHaiku{
+  color: black;
+  min-height: 100vh;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 
