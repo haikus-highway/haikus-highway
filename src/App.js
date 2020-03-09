@@ -3,6 +3,10 @@ import './App.css';
 import axios from 'axios';
 import { getRandomIntInRangeExclusive } from './randomizers';
 import removeFromArray from './removeFromArray';
+import Header from './Components/Header';
+import Form from './Components/Form';
+import Haiku from './Components/Haiku';
+import RelatedWords from './Components/RelatedWords';
 
 class App extends Component {
   constructor() {
@@ -22,7 +26,6 @@ class App extends Component {
       headerVisible: true,
       suggestions: [],
       inputTextValue: ''
-
     };
   }
 
@@ -312,32 +315,19 @@ class App extends Component {
         <div className="rightHalf">
           {
             this.state.headerVisible ?
-            <header>
-              <div className="wrapper">
-                <h1>HaikYou</h1>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo ex ut doloremque iste excepturi sit officiis odit quisquam quasi suscipit neque soluta, esse commodi nesciunt, ipsa nemo labore illum veniam.</p>
-
-                <div className="homeButtonDiv">
-                  <button className="homeButton" onClick={this.createHaiku}>
-                    Journal
-                  </button>
-
-                  <button className="homeButton">
-                    Haiku Log
-                  </button>
-                </div>
-              </div>
-            </header>
+            <Header
+              createHaiku = {this.createHaiku}
+            />
             : null
           }
 
         {
             this.state.formVisible ?
-            <form onSubmit={this.handleFormSubmit} action="submit" className="form wrapper">
-              <label className="visuallyHidden" htmlFor="userInput">Type a word:</label>
-              <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$" autoComplete="off" value={this.state.inputTextValue} />
-              <button type="submit">Submit</button>
-            </form>
+              <Form
+                handleFormSubmit={this.handleFormSubmit}
+                handleUserInput={this.handleUserInput}
+                inputTextValue={this.state.inputTextValue}
+              />
             : null
         }
       
@@ -360,87 +350,20 @@ class App extends Component {
           : null
         }
 
-        <div className="wrapper">
-          <ul className="relatedWords">
-            {
-              this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
-                this.state.tenRelatedWords.map((item, index) => {
-                  return (
-                    <div key={item.word + index}>
-                      <li>
-                        <button className="chosenWord" onClick={() => this.wordChosen(item)}>{item.word}</button>
-                      </li>
-                    </div>
-                  )
-                }) :
-                null
-            }
-                
-            {
-                this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
-                  <div className="moreWordsButton">
-                    <button onClick={this.moreWords}>More words</button>
-                  </div>
-                : null
-            }
-          </ul>
-
-        </div>
-
+        <RelatedWords
+          tenRelatedWords={this.state.tenRelatedWords}
+          totalSyllables={this.state.totalSyllables}
+          wordChosen={this.wordChosen}
+          moreWords={this.moreWords}
+        />
       </div>
 
-      <div className="printedHaiku wrapper">
-
-        {
-          this.state.firstLine.length > 0 ?
-            <p className="line firstLine">
-              {
-                this.state.firstLine.map((item, index) => {
-                  return <span key={item.word + index}>{item.word} </span>
-                })
-              }
-            </p>
-            : null
-        }
-
-        {
-
-          this.state.secondLine.length > 0 ?
-            <p className="line secondLine">
-              {
-                this.state.secondLine.map((item, index) => {
-                  return <span key={item.word + index}>{item.word} </span>
-                })
-              }
-            </p>
-            : null
-        }
-
-        {
-          this.state.thirdLine.length > 0 ?
-            <p className="line thirdLine">
-              {
-                this.state.thirdLine.map((item, index) => {
-                  return <span key={item.word + index}>{item.word} </span>
-                })
-              }
-            </p>
-            : null
-        }
-
-        {
-          this.state.currentLine.length > 0 ?
-            <p className="line currentLine underline">
-              {
-                this.state.currentLine.map((item, index) => {
-                  return <span key={item.word + index}>{item.word} </span>
-                })
-              }
-            </p>
-            : null
-        }
-
-      </div>
+      <Haiku
+        firstLine={this.state.firstLine}
+        secondLine={this.state.secondLine}
+        thirdLine={this.state.thirdLine}
+        currentLine={this.state.currentLine}
+      />
     </div>
     );
   }
