@@ -33,7 +33,7 @@ class App extends Component {
     e.preventDefault();
 
     axios({ //5
-      url: `http://api.datamuse.com/words?sp=${this.state.userInput}&md=s`,
+      url: `https://api.datamuse.com/words?sp=${this.state.userInput}&md=s`,
       method: 'GET',
       responseType: 'json',
     }).then((response) => {
@@ -104,7 +104,7 @@ class App extends Component {
   //10
   getRelatedWords = (word) => {
     axios({
-      url: `http://api.datamuse.com/words?rel_bga=${word}&md=s`,
+      url: `https://api.datamuse.com/words?rel_bga=${word}&md=s`,
       method: 'GET',
       responseType: 'json',
     }).then((response) => {
@@ -233,7 +233,7 @@ class App extends Component {
 
   autoCompleteSuggestions = (input) => {
     axios({
-      url: `http://api.datamuse.com/sug?s=${input}`,
+      url: `https://api.datamuse.com/sug?s=${input}`,
       method: 'GET',
       responseType: 'json'
     }).then((response)=> {
