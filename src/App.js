@@ -124,6 +124,8 @@ class App extends Component {
           userInput: '',
           tenRelatedWords: []
         });
+
+        alert("Couldn't find any related words - please enter another!")
       } else {
         this.filterResults(response.data);
       }
