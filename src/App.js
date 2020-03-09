@@ -198,7 +198,7 @@ class App extends Component {
     this.setState({
       userInput: e.target.value
     });
-    // this.spellCheck(e.target.value);
+    this.spellCheck(e.target.value);
   }
 
   spellCheck = (input) => {
