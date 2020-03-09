@@ -11,13 +11,15 @@ const randomizeWords = (relatedWords) => {
 
   for (let i = 0; i < 10; i++) {
     // Find random index
-    const randomIndex = getRandomIntInRangeExclusive(0, relatedWordsCopy.length)
+    const randomIndex = getRandomIntInRangeExclusive(0, relatedWordsCopy.length);
 
     // Push random index of relatedWordsCopy array into randomWords array
-    randomWords.push(relatedWordsCopy[randomIndex])
+    if (relatedWordsCopy[randomIndex] !== undefined) {
+      randomWords.push(relatedWordsCopy[randomIndex]);
+    }
 
     // Remove random index from relatedWordsCopy array to prevent duplicates in randomWords array
-    removeFromArray(relatedWordsCopy[randomIndex], relatedWordsCopy)
+    removeFromArray(relatedWordsCopy[randomIndex], relatedWordsCopy);
 
   }
 
@@ -38,6 +40,7 @@ class App extends Component {
       tenRelatedWords: [],
       currentLine: [],
       totalSyllables: 0,
+      formVisible: true
     };
   }
 
@@ -50,26 +53,58 @@ class App extends Component {
       responseType: 'json',
     }).then((response) => {
       // Recall: response = data received from AXIOS call
+      const totalSyllablesSoFar = this.getSyllablesPerLine(this.state.currentLine);
+      const maxSyllablesAllowed = this.checkMaxSyllablesAllowed(totalSyllablesSoFar);
 
-      const currentLineCopy = [...this.state.currentLine]; //6
+      if (response.data[0].word === this.state.userInput && response.data[0].numSyllables <= maxSyllablesAllowed) {
 
-      currentLineCopy.push(
-        // Recall: .push() adds items into our currentLineCopy array
-        {//7
-          word: this.state.userInput,
-          numSyllables: response.data[0].numSyllables
+        const firstLineCopy = [...this.state.firstLine];
+        const secondLineCopy = [...this.state.secondLine];
+        const thirdLineCopy = [...this.state.thirdLine];
+        const currentLineCopy = [...this.state.currentLine]; //6
+
+        if (response.data[0].numSyllables === maxSyllablesAllowed) {
+          if (maxSyllablesAllowed === 5) {
+            firstLineCopy.push(response.data[0]);
+          } else if (maxSyllablesAllowed === 7) {
+            secondLineCopy.push(response.data[0]);
+          }
+        } else {
+          currentLineCopy.push(
+            // Recall: .push() adds items into our currentLineCopy array
+            {//7
+              word: this.state.userInput,
+              numSyllables: response.data[0].numSyllables
+            }
+          );
         }
-      );
+  
+  
+        this.setState({ //8
+          firstLine: firstLineCopy,
+          secondLine: secondLineCopy,
+          thirdLine: thirdLineCopy,
+          currentLine: currentLineCopy,
+          totalSyllables: this.state.totalSyllables + response.data[0].numSyllables,
+          formVisible: false,
+        },
+          //9
+          () => {
+            this.getRelatedWords(this.state.userInput);
+          }
+        );
+      } else {
+        alert('Either you misspelled or entered too many syllables');
+        this.setState({
+          userInput: ''
+        });
+      }
+    }).catch((error) => {
+      alert("This word doesn't exist");
+      this.setState({
+        userInput: ''
+      });
 
-      this.setState({ //8
-        currentLine: currentLineCopy,
-        totalSyllables: this.state.totalSyllables + response.data[0].numSyllables,
-      },
-        //9
-        () => {
-          this.getRelatedWords(this.state.userInput);
-        }
-      );
     });
   }
 
@@ -83,9 +118,26 @@ class App extends Component {
       //11
 
       //12
-      this.filterResults(response.data);
-      console.log(response.data);
+      if (response.data.length === 0) {
+        this.setState({
+          formVisible: true,
+          userInput: ''
+        });
+      } else {
+        this.filterResults(response.data);
+      }
     });
+  }
+
+  checkMaxSyllablesAllowed = (syllablesSoFar) => {
+    let maxSyllablesAllowed;
+
+    if (this.state.totalSyllables < 5 || this.state.totalSyllables >= 12) {
+      maxSyllablesAllowed = 5 - syllablesSoFar;
+    } else {
+      maxSyllablesAllowed = 7 - syllablesSoFar;
+    }
+    return maxSyllablesAllowed;
   }
 
   filterResults = (results) => {
@@ -94,14 +146,8 @@ class App extends Component {
     const totalSyllablesSoFar = this.getSyllablesPerLine(this.state.currentLine);
 
     //14
-    let maxSyllablesAllowed;
+    const maxSyllablesAllowed = this.checkMaxSyllablesAllowed(totalSyllablesSoFar);
 
-    if (this.state.totalSyllables < 5 || this.state.totalSyllables >= 12) {
-
-      maxSyllablesAllowed = 5 - totalSyllablesSoFar;
-    } else {
-      maxSyllablesAllowed = 7 - totalSyllablesSoFar;
-    }
     //15
 
     const regex = /[a-z]/g;
@@ -128,7 +174,8 @@ class App extends Component {
 
     this.setState({
       allRelatedWords: filteredResults,
-      tenRelatedWords: randomWords
+      tenRelatedWords: randomWords,
+      userInput: ''
     })
   }
 
@@ -151,12 +198,22 @@ class App extends Component {
     this.setState({
       userInput: e.target.value
     });
+    this.spellCheck(e.target.value);
+  }
+
+  spellCheck = (input) => {
+    axios({
+      url: `https://api.datamuse.com/sug?s=${input}`,
+      method: 'GET',
+      responseType: 'json'
+    }).then((response)=> {
+      console.log(response.data);
+    })
   }
 
   // Word onClick function
   wordChosen = (item) => {
 
-    // const syllablesSoFar = this.getSyllablesPerLine(this.state.currentLine);
     let firstLineCopy = [...this.state.firstLine];
     let secondLineCopy = [...this.state.secondLine];
     let thirdLineCopy = [...this.state.thirdLine];
@@ -171,8 +228,6 @@ class App extends Component {
       //when we've reached our cap, push the array to first line, reset current line to an empty array
       firstLineCopy = [...lineArrayCopy];
       lineArrayCopy = [];
-      console.log(firstLineCopy);
-
     } else if (totalSyllablesCopy === 12) {
       secondLineCopy = [...lineArrayCopy];
       lineArrayCopy = [];
@@ -187,18 +242,16 @@ class App extends Component {
       secondLine: secondLineCopy,
       thirdLine: thirdLineCopy,
       totalSyllables: totalSyllablesCopy,
-      // tenRelatedWords: []
     }, () => {
       if (this.state.totalSyllables < 17) {
         this.getRelatedWords(item.word)
-        console.log("done");
-
       }
     })
   }
 
   render() {
     return (
+
       <div className="App wrapper">
         {/* <header>
           <h1>HaikYou</h1>
@@ -215,15 +268,19 @@ class App extends Component {
           </div>
 
         </header> */}
-
+      {
+        this.state.formVisible ?
         <form onSubmit={this.handleFormSubmit} action="submit" className="form">
           <label className="visuallyHidden" htmlFor="userInput">Type a word:</label>
           <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" />
           <button type="submit">Submit</button>
         </form>
+        : null
+       }
+
         <ul className="relatedWords">
           {
-            this.state.totalSyllables < 17 ?
+            this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
               this.state.tenRelatedWords.map((item, index) => {
                 return (
                   <li key={item.word + index}>
