@@ -178,6 +178,10 @@ button:hover{
   justify-content: center;
 }
 
+.underline {
+  font-style: italic;
+  color: #545152;
+}
 
 
 /* font-family: 'Merienda One', cursive;

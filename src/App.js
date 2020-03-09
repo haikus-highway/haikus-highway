@@ -40,7 +40,7 @@ class App extends Component {
       tenRelatedWords: [],
       currentLine: [],
       totalSyllables: 0,
-      formVisible: false
+      formVisible: true
     };
   }
 
@@ -345,7 +345,7 @@ class App extends Component {
           {
 
             this.state.currentLine.length > 0 ?
-              <p className="line currentLine">
+              <p className="line currentLine underline">
                 {
                   this.state.currentLine.map((item, index) => {
                     return <span key={item.word + index}>{item.word} </span>
