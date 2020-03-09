@@ -32,7 +32,7 @@ class App extends Component {
 
     // 1
     this.state = {
-      userInput: '', //2
+      userInput: '', //2,
       firstLine: [], //3
       secondLine: [],
       thirdLine: [],
@@ -40,7 +40,9 @@ class App extends Component {
       tenRelatedWords: [],
       currentLine: [],
       totalSyllables: 0,
-      formVisible: true
+      formVisible: true,
+      suggestions: [],
+      inputTextValue: ''
     };
   }
 
@@ -199,19 +201,37 @@ class App extends Component {
 
   handleUserInput = (e) => {
     this.setState({
-      userInput: e.target.value
+      userInput: e.target.value,
+      inputTextValue: e.target.value
     });
-    this.spellCheck(e.target.value);
+
+    if (e.target.value !== '') {
+      this.autoCompleteSuggestions(e.target.value);
+    } else {
+      this.setState({
+        suggestions: []
+      });
+    }
   }
 
-  spellCheck = (input) => {
+  autoCompleteSuggestions = (input) => {
     axios({
       url: `https://api.datamuse.com/sug?s=${input}`,
       method: 'GET',
       responseType: 'json'
     }).then((response)=> {
-      console.log(response.data);
+      this.setState({
+        suggestions: response.data
+      });
     })
+  }
+
+  chooseSuggestedWord = (word) => {
+    this.setState({
+      userInput: word,
+      inputTextValue: word,
+      suggestions: []
+    });
   }
 
   // Word onClick function
@@ -279,10 +299,29 @@ class App extends Component {
           this.state.formVisible ?
           <form onSubmit={this.handleFormSubmit} action="submit" className="form wrapper">
             <label className="visuallyHidden" htmlFor="userInput">Type a word:</label>
-                <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$" autocomplete="off"/>
+            <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$" autoComplete="off" value={this.state.inputTextValue} />
             <button type="submit">Submit</button>
           </form>
           : null
+        }
+
+        {
+          this.state.formVisible && this.state.suggestions.length > 0 ?
+            <div className="autoCompleteSuggestions">
+              <ul>
+                {
+                  this.state.suggestions.map((suggestion, index)=> {
+                    return (
+                      <li key={suggestion + index}>
+                        <button onClick={ ()=> this.chooseSuggestedWord(suggestion.word) }>{suggestion.word}</button>
+                      </li>
+                    );
+                  })
+                }
+              </ul>
+
+          </div>
+        : null
         }
 
           <ul className="relatedWords">
