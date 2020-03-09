@@ -40,16 +40,24 @@ class App extends Component {
 
       if (response.data[0].word === this.state.userInput.toLowerCase() && response.data[0].numSyllables <= maxSyllablesAllowed) {
 
-        const firstLineCopy = [...this.state.firstLine];
-        const secondLineCopy = [...this.state.secondLine];
-        const thirdLineCopy = [...this.state.thirdLine];
-        const currentLineCopy = [...this.state.currentLine]; //6
+        let firstLineCopy = [...this.state.firstLine];
+        let secondLineCopy = [...this.state.secondLine];
+        let thirdLineCopy = [...this.state.thirdLine];
+        let currentLineCopy = [...this.state.currentLine]; //6
 
         if (response.data[0].numSyllables === maxSyllablesAllowed) {
-          if (maxSyllablesAllowed === 5) {
-            firstLineCopy.push(response.data[0]);
-          } else if (maxSyllablesAllowed === 7) {
-            secondLineCopy.push(response.data[0]);
+          if (this.state.totalSyllables <= 5) {
+            currentLineCopy.push(response.data[0]);
+            firstLineCopy = [...currentLineCopy];
+            currentLineCopy = [];
+          } else if (this.state.totalSyllables <= 12) {
+            currentLineCopy.push(response.data[0]);
+            secondLineCopy = [...currentLineCopy];
+            currentLineCopy = [];
+          } else {
+            currentLineCopy.push(response.data[0]);
+            thirdLineCopy = [...currentLineCopy];
+            currentLineCopy = [];
           }
         } else {
           currentLineCopy.push(
