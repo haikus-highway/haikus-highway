@@ -251,16 +251,33 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        {
-          this.state.formVisible ?
-          <form onSubmit={this.handleFormSubmit} action="submit" className="form">
-            <label htmlFor="userInput">Type a word:</label>
-            <input onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$" value={this.state.userInput}/>
-            <button type="submit">Submit</button>
-          </form>
-          : null
-        }
+
+      <div className="App wrapper">
+        {/* <header>
+          <h1>HaikYou</h1>
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo ex ut doloremque iste excepturi sit officiis odit quisquam quasi suscipit neque soluta, esse commodi nesciunt, ipsa nemo labore illum veniam.</p>
+
+          <div className="homeButtonDiv">
+            <button className="homeButton">
+              <a href="">Journal</a>
+            </button>
+
+            <button className="homeButton">
+              <a href="">Haiku Log</a>
+            </button>
+          </div>
+
+        </header> */}
+      {
+        this.state.formVisible ?
+        <form onSubmit={this.handleFormSubmit} action="submit" className="form">
+          <label className="visuallyHidden" htmlFor="userInput">Type a word:</label>
+          <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" />
+          <button type="submit">Submit</button>
+        </form>
+        : null
+       }
+
         <ul className="relatedWords">
           {
             this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
