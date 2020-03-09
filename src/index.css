@@ -44,6 +44,10 @@ body{
   width: 80%;
 }
 
+li {
+  list-style-type: none;
+}
+
 .App{
   /* min-height: 100vh; */
   display: flex;
@@ -179,6 +183,35 @@ button:hover{
 }
 
 
+.autoCompleteSuggestions {
+  background-color: #cdc4b9;
+}
+
+.underline {
+  font-style: italic;
+  color: #545152;
+}
+
+.autoCompleteSuggestions button {
+  background-color: transparent;
+  color: #545152;
+  transition: all 0.3s;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+}
+
+.autoCompleteSuggestions button:focus,
+.autoCompleteSuggestions button:hover {
+  transform: none;
+  color: white;
+}
+
+.autoCompleteSuggestions li:focus,
+.autoCompleteSuggestions li:hover {
+  background-color: #545152;
+  color: white;
+}
 
 
 /* font-family: 'Merienda One', cursive;
