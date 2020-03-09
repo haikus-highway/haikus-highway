@@ -272,7 +272,7 @@ class App extends Component {
         this.state.formVisible ?
         <form onSubmit={this.handleFormSubmit} action="submit" className="form">
           <label className="visuallyHidden" htmlFor="userInput">Type a word:</label>
-          <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" />
+              <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$"/>
           <button type="submit">Submit</button>
         </form>
         : null
