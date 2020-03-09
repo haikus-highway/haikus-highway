@@ -27,7 +27,8 @@ img{
 }
 
 body{
-  background: url(./assets/background.jpg);
+  /* background: url(./assets/background.jpg); */
+  background: grey;
   background-size: cover;
   background-repeat: no-repeat;
   margin: 0;

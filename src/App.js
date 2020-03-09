@@ -121,7 +121,8 @@ class App extends Component {
       if (response.data.length === 0) {
         this.setState({
           formVisible: true,
-          userInput: ''
+          userInput: '',
+          tenRelatedWords: []
         });
       } else {
         this.filterResults(response.data);
