@@ -56,7 +56,7 @@ class App extends Component {
       const totalSyllablesSoFar = this.getSyllablesPerLine(this.state.currentLine);
       const maxSyllablesAllowed = this.checkMaxSyllablesAllowed(totalSyllablesSoFar);
 
-      if (response.data[0].word === this.state.userInput && response.data[0].numSyllables <= maxSyllablesAllowed) {
+      if (response.data[0].word === this.state.userInput.toLowerCase() && response.data[0].numSyllables <= maxSyllablesAllowed) {
 
         const firstLineCopy = [...this.state.firstLine];
         const secondLineCopy = [...this.state.secondLine];
