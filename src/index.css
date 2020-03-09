@@ -115,7 +115,7 @@ button:hover{
 
 .homeButton {
 
-  /* margin: 20px; */
+  margin: 20px;
 }
 
 /* Form styling */
@@ -152,18 +152,18 @@ button:hover{
 .relatedWords{
   display: flex;
   flex-wrap: wrap;
-  width: 50%;
+  width: 100%;
   margin: 20px 0;
   padding: 0;
 }
 
 .relatedWords li{
   list-style: none;
-  width: 20%;
+  /* width: 20%; */
 }
 
 .relatedWords button{
-  width: 100%;
+  /* width: 100%; */
   background: rgba(0,0,0,0.5);
   border: none;
   color: white;
@@ -177,6 +177,7 @@ button:hover{
   flex-direction: column;
   justify-content: center;
 }
+
 
 
 

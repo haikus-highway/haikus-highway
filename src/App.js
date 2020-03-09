@@ -4,28 +4,6 @@ import axios from 'axios';
 import { getRandomIntInRangeExclusive } from './randomizers';
 import removeFromArray from './removeFromArray';
 
-const randomizeWords = (relatedWords) => {
-  const relatedWordsCopy = [...relatedWords];
-
-  const randomWords = [];
-
-  for (let i = 0; i < 10; i++) {
-    // Find random index
-    const randomIndex = getRandomIntInRangeExclusive(0, relatedWordsCopy.length);
-
-    // Push random index of relatedWordsCopy array into randomWords array
-    if (relatedWordsCopy[randomIndex] !== undefined) {
-      randomWords.push(relatedWordsCopy[randomIndex]);
-    }
-
-    // Remove random index from relatedWordsCopy array to prevent duplicates in randomWords array
-    removeFromArray(relatedWordsCopy[randomIndex], relatedWordsCopy);
-
-  }
-
-  return randomWords
-}
-
 class App extends Component {
   constructor() {
     super();
@@ -40,7 +18,8 @@ class App extends Component {
       tenRelatedWords: [],
       currentLine: [],
       totalSyllables: 0,
-      formVisible: false
+      formVisible: false,
+      headerVisible: true
     };
   }
 
@@ -143,6 +122,28 @@ class App extends Component {
     return maxSyllablesAllowed;
   }
 
+  randomizeWords = (relatedWords) => {
+    const relatedWordsCopy = [...relatedWords];
+
+    const randomWords = [];
+
+    for (let i = 0; i < 10; i++) {
+      // Find random index
+      const randomIndex = getRandomIntInRangeExclusive(0, relatedWordsCopy.length);
+
+      // Push random index of relatedWordsCopy array into randomWords array
+      if (relatedWordsCopy[randomIndex] !== undefined) {
+        randomWords.push(relatedWordsCopy[randomIndex]);
+      }
+
+      // Remove random index from relatedWordsCopy array to prevent duplicates in randomWords array
+      removeFromArray(relatedWordsCopy[randomIndex], relatedWordsCopy);
+
+    }
+
+    return randomWords
+  }
+
   filterResults = (results) => {
     //13
 
@@ -170,7 +171,7 @@ class App extends Component {
     let randomWords;
 
     if (filteredResults.length > 0) {
-      randomWords = randomizeWords(filteredResults);
+      randomWords = this.randomizeWords(filteredResults);
     } else {
       randomWords = [];
     }
@@ -210,7 +211,7 @@ class App extends Component {
       method: 'GET',
       responseType: 'json'
     }).then((response)=> {
-      console.log(response.data);
+      // console.log(response.data);
     })
   }
 
@@ -252,57 +253,93 @@ class App extends Component {
     })
   }
 
+  // This is the event handler for the Journal button on our home screen
+  createHaiku = () => {
+    // (1) Make header disappear
+    // (2) Make form appear
+
+    this.setState({
+      formVisible: true,
+      headerVisible: false
+    }, () => {console.log('hello')})
+  }
+
+  // This button will get user more words related to their word of choice
+  moreWords = () => {
+    this.setState({
+      tenRelatedWords: this.randomizeWords(this.state.allRelatedWords)
+    })
+  }
+
   render() {
     return (
 
       <div className="App">
 
         <div className="right-half">
-          <header>
-            <div className="wrapper">
-              <h1>HaikYou</h1>
-              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo ex ut doloremque iste excepturi sit officiis odit quisquam quasi suscipit neque soluta, esse commodi nesciunt, ipsa nemo labore illum veniam.</p>
+          {
+            this.state.headerVisible ?
+            <header>
+              <div className="wrapper">
+                <h1>HaikYou</h1>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo ex ut doloremque iste excepturi sit officiis odit quisquam quasi suscipit neque soluta, esse commodi nesciunt, ipsa nemo labore illum veniam.</p>
 
-              <div className="homeButtonDiv">
-                <button className="homeButton">
-                  <a href="">Journal</a>
-                </button>
+                <div className="homeButtonDiv">
+                  <button className="homeButton" onClick={this.createHaiku}>
+                    Journal
+                  </button>
 
-                <button className="homeButton">
-                  <a href="">Haiku Log</a>
-                </button>
-            </div>
-            </div>
-          </header>
+                  <button className="homeButton">
+                    Haiku Log
+                  </button>
+              </div>
+              </div>
+            </header>
+            : null
+          }
 
-        {
-          this.state.formVisible ?
-          <form onSubmit={this.handleFormSubmit} action="submit" className="form wrapper">
-            <label className="visuallyHidden" htmlFor="userInput">Type a word:</label>
-                <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$"/>
-            <button type="submit">Submit</button>
-          </form>
-          : null
-        }
+          {
+            this.state.formVisible ?
+            <form onSubmit={this.handleFormSubmit} action="submit" className="form wrapper">
+              <label className="visuallyHidden" htmlFor="userInput">Type a word:</label>
+                  <input placeholder="Type a word here" onChange={this.handleUserInput} type="text" id="userInput" name="userInput" pattern="^[a-zA-Z]*$"/>
+              <button type="submit">Submit</button>
+            </form>
+            : null
+          }
 
-          <ul className="relatedWords">
-            {
-              this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
-                this.state.tenRelatedWords.map((item, index) => {
-                  return (
-                    <li key={item.word + index}>
-                      <button className="chosenWord" onClick={() => this.wordChosen(item)}>{item.word}</button>
-                    </li>
-                  )
-                }) :
-                null
-            }
-          </ul>
+          <div className="wrapper">
+            <ul className="relatedWords">
+              {
+                this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
+                  this.state.tenRelatedWords.map((item, index) => {
+                    return (
+                      <div key={item.word + index}>
+                        <li>
+                          <button className="chosenWord" onClick={() => this.wordChosen(item)}>{item.word}</button>
+                        </li>
+                      </div>
+                    )
+                  }) :
+                  null
+              }
+                  
+              {
+                  this.state.tenRelatedWords.length > 0 && this.state.totalSyllables < 17 ?
+                    <div className="moreWordsButton">
+                      <button onClick={this.moreWords}>More words</button>
+                    </div>
+                  : null
+              }
+            </ul>
+              
+
+          </div>
         </div>
 
 
 
-        <div className="printedHaiku">
+        <div className="printedHaiku wrapper">
 
           {
 
