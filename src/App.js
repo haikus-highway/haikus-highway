@@ -172,17 +172,21 @@ class App extends Component {
     // console.log(filteredResults)
 
     let randomWords;
+    let formVisible = false;
 
     if (filteredResults.length > 0) {
       randomWords = this.randomizeWords(filteredResults);
     } else {
       randomWords = [];
+      formVisible = true;
     }
 
     this.setState({
       allRelatedWords: filteredResults,
       tenRelatedWords: randomWords,
-      userInput: ''
+      userInput: '',
+      inputTextValue: '',
+      formVisible: formVisible
     })
   }
 
@@ -415,7 +419,7 @@ class App extends Component {
             </p>
             : null
         }
-        
+
         {
           this.state.currentLine.length > 0 ?
             <p className="line currentLine underline">
