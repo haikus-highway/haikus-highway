@@ -33,13 +33,9 @@ class App extends Component {
     e.preventDefault();
 
     axios({ //5
-      // url: `https://api.datamuse.com/words?sp=${this.state.userInput}&md=s`,
-      url: 'https://proxy.hackeryou.com',
+      url: `https://api.datamuse.com/words?sp=${this.state.userInput}&md=s`,
       method: 'GET',
       responseType: 'json',
-      params: {
-        reqUrl: `https://api.datamuse.com/words?sp=${this.state.userInput}&md=s`,
-      }
     }).then((response) => {
       // Recall: response = data received from AXIOS call
       const totalSyllablesSoFar = this.getSyllablesPerLine(this.state.currentLine);
@@ -108,13 +104,9 @@ class App extends Component {
   //10
   getRelatedWords = (word) => {
     axios({
-      // url: `https://api.datamuse.com/words?rel_bga=${word}&md=s`,
-      url: 'https://proxy.hackeryou.com',
+      url: `https://api.datamuse.com/words?rel_bga=${word}&md=s`,
       method: 'GET',
       responseType: 'json',
-      params: {
-        reqUrl: `https://api.datamuse.com/words?rel_bga=${word}&md=s`,
-      }
     }).then((response) => {
       //11
 
@@ -241,13 +233,9 @@ class App extends Component {
 
   autoCompleteSuggestions = (input) => {
     axios({
-      // url: `https://api.datamuse.com/sug?s=${input}`,
-      url: 'https://proxy.hackeryou.com',
+      url: `https://api.datamuse.com/sug?s=${input}`,
       method: 'GET',
-      responseType: 'json',
-      params:{
-        reqUrl: `https://api.datamuse.com/sug?s=${input}`,
-      }
+      responseType: 'json'
     }).then((response)=> {
       this.setState({
         suggestions: response.data
