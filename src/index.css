@@ -185,7 +185,11 @@ button{
 
 .relatedWords li{
   list-style: none;
-  /* width: 20%; */
+  width: 20%;
+}
+
+.relatedWords button {
+  padding: 20px 0;
 }
 
 .moreWordsButton{
@@ -301,15 +305,16 @@ button:before{
   width: 0;
   transition: 0.5s;
 }
+
+button:hover,
+button:focus {
+  color: #F6ADBF;
+}
         
 button:hover:before,
 button:focus:before{
   width: 100%;
   padding: 0;
-}
-
-.informationForUser {
-  padding: 0 5.5vmax;
 }
 
 

@@ -9,11 +9,9 @@ class RelatedWords extends Component {
                         this.props.tenRelatedWords.length > 0 && this.props.totalSyllables < 17 ?
                             this.props.tenRelatedWords.map((item, index) => {
                                 return (
-                                    <div key={item.word + index}>
-                                        <li>
-                                            <button className="chosenWord" onClick={() => this.props.wordChosen(item)}>{item.word}</button>
-                                        </li>
-                                    </div>
+                                    <li key={item.word + index}>
+                                        <button className="chosenWord" onClick={() => this.props.wordChosen(item)}>{item.word}</button>
+                                    </li>
                                 )
                             }) :
                             null

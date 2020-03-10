@@ -353,11 +353,11 @@ class App extends Component {
               createHaiku = {this.createHaiku}
             />
             :
-            <div className="informationForUser">
+            <div className="wrapper informationForUser">
               {
                 this.state.totalSyllables < 17 ?
                 <div className="syllableCounter">
-                  <h2> Syllables {currentSyllables} / {maxSyllables}</h2>
+                  <h3> Syllables {currentSyllables} / {maxSyllables}</h3>
                 </div>
                 : null
               }
