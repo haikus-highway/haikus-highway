@@ -207,6 +207,7 @@ button{
 
 .printedHaiku{
   color: #545152;
+  background: rgba(255,255,255, 0.75);
   /* min-height: 100vh; */
   /* width: 50%; */
   display: flex;
