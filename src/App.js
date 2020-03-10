@@ -141,8 +141,6 @@ class App extends Component {
             areRelatedWordsLoading: false,
             messageToUser: "Couldn't find any words related to that. Please enter the next one."
           });
-
-          alert("Couldn't find any related words - please enter another!")
         } else {
           this.filterResults(response.data);
           this.setState({
