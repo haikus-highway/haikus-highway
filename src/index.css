@@ -28,11 +28,6 @@ img{
 }
 
 body{
-  /* background: url(./assets/background.jpg); */
-  /* background: grey; */
-  /* background-size: cover; */
-  /* background-repeat: no-repeat; */
-  margin: 0;
   padding: 0;
   font-family: 'Barlow', sans-serif;
   line-height: 1.6;
@@ -50,7 +45,6 @@ li {
 }
 
 .App{
-  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -62,20 +56,7 @@ li {
   justify-content: space-between;
 }
 
-header{
-  /* background: #bcbca6;
-  width: 50%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  justify-content: center;
-  text-align: left; */
-}
-
 .rightHalf{
-  /* background: #cdc4b9; */
-  /* background: #bcbca6; */
   background: #545152;
   width: 50vw;
   min-height: 100vh;
@@ -106,26 +87,16 @@ a{
 /* Home styling */
 
 button{
-  /* padding: 10px 30px; */
-  /* border-radius: 10px; */
   border: none;
-  /* margin: 0 20px; */
-  /* background: rgba(0,0,0,0.75); */
-  /* text-transform: uppercase; */
-  /* font-size: 16px; */
   letter-spacing: 1.5px;
-  /* background: #545152; */
   color: white;
   transition: all 0.7s;
-  /* border: 1px dotted #cdc4b9; */
   background: transparent;
-  /* padding-bottom: 10px; */
 }
 
 
 .homeButton,
 .restart button{
-  /* margin: 20px 0; */
   padding: 0 0 20px 0;
   margin-left: 0;
   font-weight: bold;
@@ -136,20 +107,12 @@ button{
 
 .form{
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
-  /* padding: 20px 20px 20px 40px; */
   border-radius: 10px;
-  /* width:100%; */
-  /* justify-content: center; */
 }
 
 .form input{
-  /* text-align: center; */
-  /* padding: 10px; */
-  /* border-radius: 10px; */
   border: none;
-  /* border-bottom: 2px solid white; */
   margin: 20px 0;
   color: white;
   background-color: transparent;
@@ -158,12 +121,6 @@ button{
 .form input:focus{
   color: white;
 }
-
-/* .form button{
-  padding: 10px;
-  border-radius: 10px;
-  width: 150px;
-} */
 
 /* List styling */
 
@@ -201,24 +158,14 @@ button{
   padding-left: 0;
 }
 
-/* .relatedWords button{
-  width: 100%;
-  background: rgba(0,0,0,0.5);
-  border: none;
-  color: white;
-} */
-
 /* Left half styling */
 
 .printedHaiku{
   color: #545152;
   background: rgba(255,255,255, 0.75);
-  /* min-height: 100vh; */
-  /* width: 50%; */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* margin-top: 40vh; */
   margin: auto;
   
 }
@@ -237,8 +184,6 @@ button{
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
-  /* min-width: 460px; */
   justify-content: flex-end;
 }
 
@@ -254,9 +199,6 @@ button{
 
 .japanese{
   color: #cdc4b942;
-  /* font-size: 175px; */
-  /* width: 100%; */
-  /* position: relative; */
   margin: 0 auto;
   width: 40vmax;
   max-width: 450px;
@@ -307,7 +249,6 @@ button{
 button:before{
   content: '';
   border-bottom: 1px solid #bcbca6;
-  /* border-bottom: 1px solid white; */
   padding: 0 10px;
   position: absolute;
   bottom: 0;
@@ -330,18 +271,13 @@ button:focus:before{
   padding: 0;
 }
 
-
-/* font-family: 'Merienda One', cursive;
-
-font-family: 'Barlow', sans-serif; */
-
-/* responsive design */
+/* Media Queries */
 
 @media(max-width: 800px){
   .App {
     flex-direction: column;
   }
-
+  
   h1{
     text-shadow: 2px 2px #cdc4b9;
   }
