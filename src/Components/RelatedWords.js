@@ -8,11 +8,9 @@ const RelatedWords = (props) => {
               props.tenRelatedWords.length > 0 && props.totalSyllables < 17 ?
                 props.tenRelatedWords.map((item, index) => {
                   return (
-                    <div key={item.word + index}>
-                      <li>
-                        <button className="chosenWord" onClick={() => props.wordChosen(item)}>{item.word}</button>
-                      </li>
-                    </div>
+                    <li key={item.word + index}>
+                        <button className="chosenWord" onClick={() => this.props.wordChosen(item)}>{item.word}</button>
+                    </li>
                   )
                 }) 
               : null

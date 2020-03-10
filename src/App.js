@@ -34,6 +34,7 @@ class App extends Component {
       headerVisible: true,
       suggestions: [],
       inputTextValue: '',
+      messageToUser: 'Letter characters only, please.',
       areRelatedWordsLoading: false,
     };
   }
@@ -89,22 +90,32 @@ class App extends Component {
           currentLine: currentLineCopy,
           totalSyllables: this.state.totalSyllables + response.data[0].numSyllables,
           formVisible: false,
+          messageToUser: 'Choose the next word.'
         },
           //9
           () => {
             this.getRelatedWords(this.state.userInput);
           }
         );
-      } else {
-        alert('Either you misspelled or entered too many syllables');
+      } else if (response.data[0].word !== this.state.userInput.toLowerCase()) {
         this.setState({
-          userInput: ''
+          userInput: '',
+          inputTextValue: '',
+          messageToUser: 'I think you may have misspelled that. Please try again.'
+        });
+      } else if (response.data[0].numSyllables > maxSyllablesAllowed) {
+        this.setState({
+          userInput: '',
+          inputTextValue: '',
+          messageToUser: 'That word is too many syllables. Please try another.'
         });
       }
     }).catch((error) => {
-      alert("This word doesn't exist");
       this.setState({
-        userInput: ''
+        userInput: '',
+        inputTextValue: '',
+        messageToUser: "That word doesn't seem to exist. Please try another.",
+        suggestions: []
       });
 
     });
@@ -127,6 +138,7 @@ class App extends Component {
             userInput: '',
             tenRelatedWords: [],
             areRelatedWordsLoading: false,
+            messageToUser: "Couldn't find any words related to that. Please enter the next one."
           });
 
           alert("Couldn't find any related words - please enter another!")
@@ -199,12 +211,14 @@ class App extends Component {
 
     let randomWords;
     let formVisible = false;
+    let messageToUser = 'Choose the next word.';
 
     if (filteredResults.length > 0) {
       randomWords = this.randomizeWords(filteredResults);
     } else {
       randomWords = [];
       formVisible = true;
+      messageToUser = "Couldn't find any words related to that. Please enter the next one.";
     }
 
     this.setState({
@@ -212,7 +226,8 @@ class App extends Component {
       tenRelatedWords: randomWords,
       userInput: '',
       inputTextValue: '',
-      formVisible: formVisible
+      formVisible: formVisible,
+      messageToUser: messageToUser
     })
   }
 
@@ -278,6 +293,8 @@ class App extends Component {
 
     let totalSyllablesCopy = this.state.totalSyllables + item.numSyllables;
 
+    let messageToUser = 'Choose the next word.';
+
     //if the current line is line one, and syllables so far is five, then move to line two and update the current line to two
     if (totalSyllablesCopy === 5) {
       //when we've reached our cap, push the array to first line, reset current line to an empty array
@@ -289,6 +306,7 @@ class App extends Component {
     } else if (totalSyllablesCopy === 17) {
       thirdLineCopy = [...lineArrayCopy];
       lineArrayCopy = [];
+      messageToUser = '';
     }
 
     this.setState({
@@ -297,6 +315,7 @@ class App extends Component {
       secondLine: secondLineCopy,
       thirdLine: thirdLineCopy,
       totalSyllables: totalSyllablesCopy,
+      messageToUser: messageToUser
     }, () => {
       if (this.state.totalSyllables < 17) {
         this.getRelatedWords(item.word)
@@ -318,7 +337,8 @@ class App extends Component {
       suggestions: [],
       inputTextValue: '',
       formVisible: true,
-      headerVisible: false
+      headerVisible: false,
+      messageToUser: 'Letter characters only, please.'
     })
   }
 
@@ -332,6 +352,13 @@ class App extends Component {
   
 
   render() {
+
+    const currentSyllables = this.getSyllablesPerLine(this.state.currentLine);
+    let maxSyllables = 5;
+    if (this.state.firstLine.length > 0 && this.state.secondLine.length === 0) {
+      maxSyllables = 7;
+    }
+
     return (
 
       <div className="App">
@@ -342,7 +369,19 @@ class App extends Component {
             <Header
               createHaiku = {this.createHaiku}
             />
-            : null
+            :
+            <div className="wrapper informationForUser">
+              {
+                this.state.totalSyllables < 17 ?
+                <div className="syllableCounter">
+                  <h3> Syllables {currentSyllables} / {maxSyllables}</h3>
+                </div>
+                : null
+              }
+              <div className="messageToUser">
+                <p>{this.state.messageToUser}</p>
+              </div>
+            </div>
           }
 
           {
