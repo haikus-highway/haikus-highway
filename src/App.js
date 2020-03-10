@@ -27,7 +27,8 @@ class App extends Component {
       formVisible: false,
       headerVisible: true,
       suggestions: [],
-      inputTextValue: ''
+      inputTextValue: '',
+      messageToUser: 'Letter characters only, please.'
     };
   }
 
@@ -82,22 +83,32 @@ class App extends Component {
           currentLine: currentLineCopy,
           totalSyllables: this.state.totalSyllables + response.data[0].numSyllables,
           formVisible: false,
+          messageToUser: 'Choose the next word.'
         },
           //9
           () => {
             this.getRelatedWords(this.state.userInput);
           }
         );
-      } else {
-        alert('Either you misspelled or entered too many syllables');
+      } else if (response.data[0].word !== this.state.userInput.toLowerCase()) {
         this.setState({
-          userInput: ''
+          userInput: '',
+          inputTextValue: '',
+          messageToUser: 'I think you may have misspelled that. Please try again.'
+        });
+      } else if (response.data[0].numSyllables > maxSyllablesAllowed) {
+        this.setState({
+          userInput: '',
+          inputTextValue: '',
+          messageToUser: 'That word is too many syllables. Please try another.'
         });
       }
     }).catch((error) => {
-      alert("This word doesn't exist");
       this.setState({
-        userInput: ''
+        userInput: '',
+        inputTextValue: '',
+        messageToUser: "That word doesn't seem to exist. Please try another.",
+        suggestions: []
       });
 
     });
@@ -284,6 +295,7 @@ class App extends Component {
       secondLine: secondLineCopy,
       thirdLine: thirdLineCopy,
       totalSyllables: totalSyllablesCopy,
+      messageToUser: 'Choose the next word.'
     }, () => {
       if (this.state.totalSyllables < 17) {
         this.getRelatedWords(item.word)
@@ -327,7 +339,10 @@ class App extends Component {
             <Header
               createHaiku = {this.createHaiku}
             />
-            : null
+            :
+            <div className="messageToUser">
+              <p>{this.state.messageToUser}</p>
+            </div>
           }
 
           {
