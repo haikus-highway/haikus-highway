@@ -335,6 +335,13 @@ class App extends Component {
   }
 
   render() {
+
+    const currentSyllables = this.getSyllablesPerLine(this.state.currentLine);
+    let maxSyllables = 5;
+    if (this.state.firstLine.length > 0 && this.state.secondLine.length === 0) {
+      maxSyllables = 7;
+    }
+
     return (
 
       <div className="App">
@@ -346,8 +353,17 @@ class App extends Component {
               createHaiku = {this.createHaiku}
             />
             :
-            <div className="messageToUser">
-              <p>{this.state.messageToUser}</p>
+            <div className="informationForUser">
+              {
+                this.state.totalSyllables < 17 ?
+                <div className="syllableCounter">
+                  <h2> Syllables {currentSyllables} / {maxSyllables}</h2>
+                </div>
+                : null
+              }
+              <div className="messageToUser">
+                <p>{this.state.messageToUser}</p>
+              </div>
             </div>
           }
 
