@@ -359,6 +359,13 @@ class App extends Component {
       maxSyllables = 7;
     }
 
+    let showPreloader = false;
+    if (!this.state.areRelatedWordsLoading) {
+      setTimeout(() => {
+        showPreloader = true;
+      }, 300);
+    }
+
     return (
 
       <div className="App">
@@ -413,7 +420,7 @@ class App extends Component {
           }
 
         {
-          this.state.areRelatedWordsLoading ?
+          this.state.areRelatedWordsLoading && showPreloader ?
             <SyncLoader
               size={15}
               color={"#fff"}
