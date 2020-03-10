@@ -258,7 +258,7 @@ button{
   /* width: 100%; */
   /* position: relative; */
   margin: 0 auto;
-  /* width: 40vmax; */
+  width: 40vmax;
   max-width: 450px;
   position: absolute;
 }
@@ -337,49 +337,17 @@ font-family: 'Barlow', sans-serif; */
 
 /* responsive design */
 
-@media (max-width: 980px) {
-
-  h1{
-    /* font-size: 5.5vmax; */
-    text-shadow: 4px 4px#cdc4b9;
-  }
-
-  .rightHalf p {
-    font-size: 18px;
-  }
-
-  .homeButton {
-    font-size: 16px;
-  }
-
-  .chosenword {
-    font-size: 16px;
-  }
-
-  .moreWordsButton button {
-
-    font-size: 16px;
-
-  }
-
-  .leftHalf {
-
-    font-size: 25px;
-
-
-  }
-
-  .restart button {
-
-    font-size: 16px;
-  }
-
-
-}
-
 @media(max-width: 800px){
   .App {
     flex-direction: column;
+  }
+
+  h1{
+    text-shadow: 2px 2px #cdc4b9;
+  }
+
+  .homeButton{
+    margin: 0 15px;
   }
 
   .form {
@@ -395,8 +363,8 @@ font-family: 'Barlow', sans-serif; */
   }
   
   .rightHalf {
-    min-height: 50vh;
     height: 50vh;
+    min-height: 50vh;
     width: 100%;
     text-align: center;
   }
