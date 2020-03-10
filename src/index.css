@@ -73,8 +73,9 @@ header{
 }
 
 .rightHalf{
-background: #bcbca6;
-  width: 50%;
+  /* background: #cdc4b9; */
+  background: #bcbca6;
+  width: 50vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -90,6 +91,10 @@ h1{
   text-shadow: 5px 5px #cdc4b9;
 }
 
+h2{
+  font-size: 3vmax;
+}
+
 a{
   text-decoration: none;
   color: white;
@@ -98,28 +103,30 @@ a{
 /* Home styling */
 
 button{
-  padding: 10px 30px;
-  border-radius: 10px;
+  /* padding: 10px 30px; */
+  /* border-radius: 10px; */
   border: none;
   /* margin: 0 20px; */
-  background: rgba(0,0,0,0.75);
+  /* background: rgba(0,0,0,0.75); */
   /* text-transform: uppercase; */
   /* font-size: 16px; */
   letter-spacing: 1.5px;
   /* background: #545152; */
   color: white;
-  
   transition: all 0.7s;
   /* border: 1px dotted #cdc4b9; */
+  background: transparent;
+  /* padding-bottom: 10px; */
 }
 
-button:hover{
-  transform: scale(1.1);
-}
 
-.homeButton {
-
-  margin: 20px;
+.homeButton,
+.restart button{
+  /* margin: 20px 0; */
+  padding: 0 0 20px 0;
+  margin-left: 0;
+  font-weight: bold;
+  margin-right: 30px;
 }
 
 /* Form styling */
@@ -145,11 +152,15 @@ button:hover{
   background-color: transparent;
 }
 
-.form button{
+.form input:focus{
+  color: white;
+}
+
+/* .form button{
   padding: 10px;
   border-radius: 10px;
   width: 150px;
-}
+} */
 
 /* List styling */
 
@@ -161,35 +172,81 @@ button:hover{
   padding: 0;
 }
 
+.relatedWords div{
+  margin: 20px;
+}
+
 .relatedWords li{
   list-style: none;
   /* width: 20%; */
 }
 
-.relatedWords button{
-  /* width: 100%; */
+/* .relatedWords button{
+  width: 100%;
   background: rgba(0,0,0,0.5);
   border: none;
   color: white;
-}
+} */
+
+/* Left half styling */
 
 .printedHaiku{
   color: black;
-  min-height: 100vh;
-  width: 50%;
+  /* min-height: 100vh; */
+  /* width: 50%; */
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 40vh;
 }
-
 
 .autoCompleteSuggestions {
   background-color: #cdc4b9;
 }
 
+.leftHalf{
+  background: url(./assets/japanese-flowers.jpg);
+  background-position: cover;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 460px;
+}
+
+.line{
+  margin: 0;
+  line-height: 70px;
+}
+
 .underline {
   font-style: italic;
   color: #545152;
+}
+
+.japanese{
+  color: #cdc4b942;
+  /* font-size: 175px; */
+  /* width: 100%; */
+  /* position: relative; */
+  margin: 0 auto;
+  width: 400px;
+}
+
+.restart{
+  padding: 100px;
+  outline: 0.5px dashed white;
+}
+
+.autoCompleteSuggestions ul{
+  padding: 0;
+}
+
+.autoCompleteSuggestions li{
+  padding-left: 30px;
 }
 
 .autoCompleteSuggestions button {
@@ -211,6 +268,31 @@ button:hover{
 .autoCompleteSuggestions li:hover {
   background-color: #545152;
   color: white;
+}
+
+button{
+  position: relative;
+  transition: 0.3s;
+  padding: 10px;
+}
+
+button:before{
+  content: '';
+  border-bottom: 1px solid white;
+  padding: 0 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 0;
+  transition: 0.5s;
+}
+        
+button:hover:before,
+button:focus:before{
+  width: 100%;
+  padding: 0;
 }
 
 
