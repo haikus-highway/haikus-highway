@@ -426,13 +426,17 @@ class App extends Component {
               color={"#fff"}
               css={override}
             />
-            :
+          :
+          
+          this.state.totalSyllables < 17 ?
             <RelatedWords
               tenRelatedWords={this.state.tenRelatedWords}
               totalSyllables={this.state.totalSyllables}
               wordChosen={this.wordChosen}
               moreWords={this.moreWords}
             />
+          : null
+          
         }
 
         {
