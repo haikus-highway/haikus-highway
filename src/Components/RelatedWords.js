@@ -9,7 +9,7 @@ const RelatedWords = (props) => {
                 props.tenRelatedWords.map((item, index) => {
                   return (
                     <li key={item.word + index}>
-                        <button className="chosenWord" onClick={() => this.props.wordChosen(item)}>{item.word}</button>
+                        <button className="chosenWord" onClick={() => props.wordChosen(item)}>{item.word}</button>
                     </li>
                   )
                 }) 
