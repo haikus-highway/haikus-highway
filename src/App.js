@@ -129,13 +129,10 @@ class App extends Component {
 
           alert("Couldn't find any related words - please enter another!")
         } else {
-          setTimeout(() => {
-            this.filterResults(response.data);
-            this.setState({
-              areRelatedWordsLoading: false,
-            })
-
-          }, 2000)
+          this.filterResults(response.data);
+          this.setState({
+            areRelatedWordsLoading: false,
+          })
         }
       });
     })
