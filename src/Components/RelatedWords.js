@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class RelatedWords extends Component {
     render() {
         return (
-            <div className="wrapper">
+            <div className="wrapper relatedWordsFlex">
                 <ul className="relatedWords">
                     {
                         this.props.tenRelatedWords.length > 0 && this.props.totalSyllables < 17 ?

@@ -7,6 +7,8 @@ import Header from './Components/Header';
 import Form from './Components/Form';
 import Haiku from './Components/Haiku';
 import RelatedWords from './Components/RelatedWords';
+import Restart from './Components/Restart';
+import HaikuImage from './assets/haiku-japanese.jpg';
 
 class App extends Component {
   constructor() {
@@ -289,15 +291,22 @@ class App extends Component {
     })
   }
 
-  // This is the event handler for the Journal button on our home screen
+  // This is the event handler for the Journal button on our home screen, as well as our "restart" button
   createHaiku = () => {
-    // (1) Make header disappear
-    // (2) Make form appear
-
     this.setState({
+      userInput: '', 
+      firstLine: [],
+      secondLine: [],
+      thirdLine: [],
+      allRelatedWords: [],
+      tenRelatedWords: [],
+      currentLine: [],
+      totalSyllables: 0,
+      suggestions: [],
+      inputTextValue: '',
       formVisible: true,
       headerVisible: false
-    }, () => {console.log('hello')})
+    })
   }
 
   // This button will get user more words related to their word of choice
@@ -321,7 +330,7 @@ class App extends Component {
             : null
           }
 
-        {
+          {
             this.state.formVisible ?
               <Form
                 handleFormSubmit={this.handleFormSubmit}
@@ -329,9 +338,9 @@ class App extends Component {
                 inputTextValue={this.state.inputTextValue}
               />
             : null
-        }
-      
-        {
+          }
+        
+          {
             this.state.formVisible && this.state.suggestions.length > 0 ?
               <div className="autoCompleteSuggestions">
                 <ul>
@@ -345,10 +354,9 @@ class App extends Component {
                     })
                   }
                 </ul>
-
-            </div>
-          : null
-        }
+              </div>
+            : null
+          }
 
         <RelatedWords
           tenRelatedWords={this.state.tenRelatedWords}
@@ -356,14 +364,29 @@ class App extends Component {
           wordChosen={this.wordChosen}
           moreWords={this.moreWords}
         />
+
+        {
+          this.state.totalSyllables === 17 ?
+            <Restart
+              createHaiku={this.createHaiku}
+            />
+            : null    
+        }
       </div>
 
-      <Haiku
-        firstLine={this.state.firstLine}
-        secondLine={this.state.secondLine}
-        thirdLine={this.state.thirdLine}
-        currentLine={this.state.currentLine}
-      />
+      <div className="leftHalf">
+        <Haiku
+          firstLine={this.state.firstLine}
+          secondLine={this.state.secondLine}
+          thirdLine={this.state.thirdLine}
+          currentLine={this.state.currentLine}
+        />
+
+        <div className="japanese">
+          <img src={HaikuImage} alt=""/>
+        </div>
+      </div>
+
     </div>
     );
   }
