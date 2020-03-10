@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
@@ -213,7 +214,9 @@ button{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 40vh;
+  /* margin-top: 40vh; */
+  margin: auto;
+  
 }
 
 .autoCompleteSuggestions {
@@ -229,8 +232,9 @@ button{
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   min-width: 460px;
+  justify-content: flex-end;
 }
 
 .line{
@@ -250,10 +254,11 @@ button{
   /* position: relative; */
   margin: 0 auto;
   width: 400px;
+  
 }
 
 .restart{
-  padding: 100px;
+  padding: 7vmax;
   outline: 0.5px dashed #bcbca6;
   text-align: center;
 }
@@ -323,3 +328,115 @@ button:focus:before{
 
 font-family: 'Barlow', sans-serif; */
 
+/* responsive design */
+
+@media (max-width: 980px) {
+
+  h1{
+    font-size: 5.5vmax;
+    text-shadow: 4px 4px#cdc4b9;
+  }
+
+  .rightHalf p {
+    font-size: 18px;
+  }
+
+  .homeButton {
+    font-size: 16px;
+  }
+
+  .chosenword {
+    font-size: 16px;
+  }
+
+  .moreWordsButton button {
+
+    font-size: 16px;
+
+  }
+
+  .leftHalf {
+
+    font-size: 25px;
+
+
+  }
+
+  .restart button {
+
+    font-size: 16px;
+  }
+
+
+}
+
+@media (max-width: 860px) {
+
+  .leftHalf {
+    min-width: 50%;
+  }
+
+  .rightHalf {
+    min-width: 50%;
+  }
+
+  .japanese {
+    width:60%;
+  }
+
+}
+
+@media(max-width: 800px){
+  .form {
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 680px){
+
+  .App {
+    flex-direction: column;
+  }
+
+  .leftHalf {
+    min-height: 50vh;
+    width: 100%;
+  }
+
+  .rightHalf {
+    min-height: 50vh;
+    width: 100%;
+    text-align: center;
+  }
+
+  .japanese {
+    display: none;
+  }
+
+  .form {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px){
+
+  h1 {
+    font-size: 5vmax;
+    padding-top: 10px;
+  }
+
+  .rightHalf p {
+    font-size: 16px;
+  }
+
+  .rightHalf {
+    min-height: 40vh;
+  }
+
+  .leftHalf {
+    min-height: 60vh;
+  }
+
+}
