@@ -74,8 +74,8 @@ header{
 
 .rightHalf{
   /* background: #cdc4b9; */
-  background: #bcbca6;
-  /* background: #545152; */
+  /* background: #bcbca6; */
+  background: #545152;
   width: 50vw;
   min-height: 100vh;
   display: flex;
@@ -166,6 +166,11 @@ button{
 
 /* List styling */
 
+.relatedWordsFlex{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .relatedWords{
   display: flex;
   flex-wrap: wrap;
@@ -181,6 +186,10 @@ button{
 .relatedWords li{
   list-style: none;
   /* width: 20%; */
+}
+
+.moreWordsButton{
+  align-self: flex-end;
 }
 
 /* .relatedWords button{
@@ -240,7 +249,7 @@ button{
 
 .restart{
   padding: 100px;
-  outline: 0.5px dashed white;
+  outline: 0.5px dashed #bcbca6;
   text-align: center;
 }
 
@@ -281,8 +290,8 @@ button{
 
 button:before{
   content: '';
-  /* border-bottom: 1px solid #bcbca6; */
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid #bcbca6;
+  /* border-bottom: 1px solid white; */
   padding: 0 10px;
   position: absolute;
   bottom: 0;
