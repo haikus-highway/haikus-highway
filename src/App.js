@@ -7,6 +7,12 @@ import Header from './Components/Header';
 import Form from './Components/Form';
 import Haiku from './Components/Haiku';
 import RelatedWords from './Components/RelatedWords';
+import SyncLoader from "react-spinners/SyncLoader";
+
+const override = `
+  display: block;
+  margin: 0 auto;
+`;
 
 class App extends Component {
   constructor() {
@@ -25,7 +31,8 @@ class App extends Component {
       formVisible: false,
       headerVisible: true,
       suggestions: [],
-      inputTextValue: ''
+      inputTextValue: '',
+      areRelatedWordsLoading: false,
     };
   }
 
@@ -103,26 +110,35 @@ class App extends Component {
 
   //10
   getRelatedWords = (word) => {
-    axios({
-      url: `https://api.datamuse.com/words?rel_bga=${word}&md=s`,
-      method: 'GET',
-      responseType: 'json',
-    }).then((response) => {
-      //11
+    this.setState({areRelatedWordsLoading: true}, () => {
+      axios({
+        url: `https://api.datamuse.com/words?rel_bga=${word}&md=s`,
+        method: 'GET',
+        responseType: 'json',
+      }).then((response) => {
+        //11
 
-      //12
-      if (response.data.length === 0) {
-        this.setState({
-          formVisible: true,
-          userInput: '',
-          tenRelatedWords: []
-        });
+        //12
+        if (response.data.length === 0) {
+          this.setState({
+            formVisible: true,
+            userInput: '',
+            tenRelatedWords: [],
+            areRelatedWordsLoading: false,
+          });
 
-        alert("Couldn't find any related words - please enter another!")
-      } else {
-        this.filterResults(response.data);
-      }
-    });
+          alert("Couldn't find any related words - please enter another!")
+        } else {
+          setTimeout(() => {
+            this.filterResults(response.data);
+            this.setState({
+              areRelatedWordsLoading: false,
+            })
+
+          }, 2000)
+        }
+      });
+    })
   }
 
   checkMaxSyllablesAllowed = (syllablesSoFar) => {
@@ -307,6 +323,8 @@ class App extends Component {
     })
   }
 
+  
+
   render() {
     return (
 
@@ -350,12 +368,21 @@ class App extends Component {
           : null
         }
 
-        <RelatedWords
-          tenRelatedWords={this.state.tenRelatedWords}
-          totalSyllables={this.state.totalSyllables}
-          wordChosen={this.wordChosen}
-          moreWords={this.moreWords}
-        />
+        {
+          this.state.areRelatedWordsLoading ?
+            <SyncLoader
+              size={15}
+              color={"#fff"}
+              css={override}
+            />
+            :
+            <RelatedWords
+              tenRelatedWords={this.state.tenRelatedWords}
+              totalSyllables={this.state.totalSyllables}
+              wordChosen={this.wordChosen}
+              moreWords={this.moreWords}
+            />
+        }
       </div>
 
       <Haiku
