@@ -308,6 +308,10 @@ button:focus:before{
   padding: 0;
 }
 
+.messageToUser {
+  padding: 0 5.5vmax;
+}
+
 
 /* font-family: 'Merienda One', cursive;
 

@@ -128,10 +128,9 @@ class App extends Component {
         this.setState({
           formVisible: true,
           userInput: '',
-          tenRelatedWords: []
+          tenRelatedWords: [],
+          messageToUser: "Couldn't find any words related to that. Please enter the next one."
         });
-
-        alert("Couldn't find any related words - please enter another!")
       } else {
         this.filterResults(response.data);
       }
@@ -197,12 +196,14 @@ class App extends Component {
 
     let randomWords;
     let formVisible = false;
+    let messageToUser = 'Choose the next word.';
 
     if (filteredResults.length > 0) {
       randomWords = this.randomizeWords(filteredResults);
     } else {
       randomWords = [];
       formVisible = true;
+      messageToUser = "Couldn't find any words related to that. Please enter the next one.";
     }
 
     this.setState({
@@ -210,7 +211,8 @@ class App extends Component {
       tenRelatedWords: randomWords,
       userInput: '',
       inputTextValue: '',
-      formVisible: formVisible
+      formVisible: formVisible,
+      messageToUser: messageToUser
     })
   }
 
@@ -276,6 +278,8 @@ class App extends Component {
 
     let totalSyllablesCopy = this.state.totalSyllables + item.numSyllables;
 
+    let messageToUser = 'Choose the next word.';
+
     //if the current line is line one, and syllables so far is five, then move to line two and update the current line to two
     if (totalSyllablesCopy === 5) {
       //when we've reached our cap, push the array to first line, reset current line to an empty array
@@ -287,6 +291,7 @@ class App extends Component {
     } else if (totalSyllablesCopy === 17) {
       thirdLineCopy = [...lineArrayCopy];
       lineArrayCopy = [];
+      messageToUser = '';
     }
 
     this.setState({
@@ -295,7 +300,7 @@ class App extends Component {
       secondLine: secondLineCopy,
       thirdLine: thirdLineCopy,
       totalSyllables: totalSyllablesCopy,
-      messageToUser: 'Choose the next word.'
+      messageToUser: messageToUser
     }, () => {
       if (this.state.totalSyllables < 17) {
         this.getRelatedWords(item.word)
@@ -317,7 +322,8 @@ class App extends Component {
       suggestions: [],
       inputTextValue: '',
       formVisible: true,
-      headerVisible: false
+      headerVisible: false,
+      messageToUser: 'Letter characters only, please.'
     })
   }
 
