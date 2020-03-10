@@ -139,7 +139,8 @@ class App extends Component {
             userInput: '',
             tenRelatedWords: [],
             areRelatedWordsLoading: false,
-            messageToUser: "Couldn't find any words related to that. Please enter the next one."
+            messageToUser: "Couldn't find any words related to that. Please enter the next one.",
+            inputTextValue: ''
           });
         } else {
           this.filterResults(response.data);
