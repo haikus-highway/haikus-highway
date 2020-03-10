@@ -186,7 +186,7 @@ button{
 
 .relatedWords li{
   list-style: none;
-  width: 20%;
+  margin-right: 30px;
 }
 
 .relatedWords button {
