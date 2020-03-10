@@ -10,11 +10,11 @@ class Header extends Component{
 
                     <div className="homeButtonDiv">
                         <button className="homeButton" onClick={this.props.createHaiku}>
-                            Journal
+                            Write
                   </button>
 
                         <button className="homeButton">
-                            Haiku Log
+                            Journal
                   </button>
                     </div>
                 </div>

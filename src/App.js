@@ -384,9 +384,6 @@ class App extends Component {
 
         <div className="japanese">
           <img src={HaikuImage} alt=""/>
-          {/* <p> */}
-            {/* 俳句 */}
-          {/* </p> */}
         </div>
       </div>
 
