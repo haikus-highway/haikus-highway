@@ -6,7 +6,7 @@ class Header extends Component{
             <header>
                 <div className="wrapper">
                     <h1>HaikYou</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo ex ut doloremque iste excepturi sit officiis odit quisquam quasi suscipit neque soluta, esse commodi nesciunt, ipsa nemo labore illum veniam.</p>
+                    <p>A haiku is a Japanese poem of seventeen syllables, in three lines of five, seven, and five, traditionally evoking images of the natural world. Create your own!</p>
 
                     <div className="homeButtonDiv">
                         <button className="homeButton" onClick={this.props.createHaiku}>
