@@ -9,6 +9,12 @@ import Haiku from './Components/Haiku';
 import RelatedWords from './Components/RelatedWords';
 import Restart from './Components/Restart';
 import HaikuImage from './assets/haiku-japanese.jpg';
+import SyncLoader from "react-spinners/SyncLoader";
+
+const override = `
+  display: block;
+  margin: 0 auto;
+`;
 
 class App extends Component {
   constructor() {
@@ -28,7 +34,8 @@ class App extends Component {
       headerVisible: true,
       suggestions: [],
       inputTextValue: '',
-      messageToUser: 'Letter characters only, please.'
+      messageToUser: 'Letter characters only, please.',
+      areRelatedWordsLoading: false,
     };
   }
 
@@ -116,25 +123,33 @@ class App extends Component {
 
   //10
   getRelatedWords = (word) => {
-    axios({
-      url: `https://api.datamuse.com/words?rel_bga=${word}&md=s`,
-      method: 'GET',
-      responseType: 'json',
-    }).then((response) => {
-      //11
+    this.setState({areRelatedWordsLoading: true}, () => {
+      axios({
+        url: `https://api.datamuse.com/words?rel_bga=${word}&md=s`,
+        method: 'GET',
+        responseType: 'json',
+      }).then((response) => {
+        //11
 
-      //12
-      if (response.data.length === 0) {
-        this.setState({
-          formVisible: true,
-          userInput: '',
-          tenRelatedWords: [],
-          messageToUser: "Couldn't find any words related to that. Please enter the next one."
-        });
-      } else {
-        this.filterResults(response.data);
-      }
-    });
+        //12
+        if (response.data.length === 0) {
+          this.setState({
+            formVisible: true,
+            userInput: '',
+            tenRelatedWords: [],
+            areRelatedWordsLoading: false,
+            messageToUser: "Couldn't find any words related to that. Please enter the next one."
+          });
+
+          alert("Couldn't find any related words - please enter another!")
+        } else {
+          this.filterResults(response.data);
+          this.setState({
+            areRelatedWordsLoading: false,
+          })
+        }
+      });
+    })
   }
 
   checkMaxSyllablesAllowed = (syllablesSoFar) => {
@@ -334,6 +349,8 @@ class App extends Component {
     })
   }
 
+  
+
   render() {
 
     const currentSyllables = this.getSyllablesPerLine(this.state.currentLine);
@@ -395,12 +412,21 @@ class App extends Component {
             : null
           }
 
-        <RelatedWords
-          tenRelatedWords={this.state.tenRelatedWords}
-          totalSyllables={this.state.totalSyllables}
-          wordChosen={this.wordChosen}
-          moreWords={this.moreWords}
-        />
+        {
+          this.state.areRelatedWordsLoading ?
+            <SyncLoader
+              size={15}
+              color={"#fff"}
+              css={override}
+            />
+            :
+            <RelatedWords
+              tenRelatedWords={this.state.tenRelatedWords}
+              totalSyllables={this.state.totalSyllables}
+              wordChosen={this.wordChosen}
+              moreWords={this.moreWords}
+            />
+        }
 
         {
           this.state.totalSyllables === 17 ?
