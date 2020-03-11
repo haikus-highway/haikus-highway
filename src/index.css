@@ -375,6 +375,10 @@ button:focus:before{
   .japanese {
     display: none;
   }
+
+  .journal{
+    max-height: 30vh;
+  }
 }
 
 
