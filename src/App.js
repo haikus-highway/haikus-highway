@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import firebase from './firebase';
 import './App.css';
 import axios from 'axios';
@@ -37,7 +37,32 @@ class App extends Component {
       inputTextValue: '',
       messageToUser: 'Letter characters only, please.',
       areRelatedWordsLoading: false,
+      showTitleForm: false,
+      titleInput: '',
+      authorInput: '',
+      savedHaikus: [],
+      showJournal: false,
+      activeHaiku: false
     };
+  }
+
+  componentDidMount() {
+    const dbRef = firebase.database().ref();
+
+    
+    dbRef.on('value', (response) => {
+      let savedHaikusArray = [];
+      
+      const savedHaikusRaw = response.val();
+      
+      for (let haiku in savedHaikusRaw) {
+        savedHaikusArray.push(savedHaikusRaw[haiku]);
+      }
+
+      this.setState({
+        savedHaikus: savedHaikusArray
+      });
+    });
   }
 
   handleFormSubmit = (e) => { //4
@@ -338,7 +363,8 @@ class App extends Component {
       inputTextValue: '',
       formVisible: true,
       headerVisible: false,
-      messageToUser: 'Letter characters only, please.'
+      showJournal: false,
+      activeHaiku: false
     })
   }
 
@@ -349,7 +375,82 @@ class App extends Component {
     })
   }
 
-  
+  handleTitleInput = (e) => {
+    this.setState({
+      titleInput: e.target.value
+    });
+  }
+
+  handleAuthorInput = (e) => {
+    this.setState({
+      authorInput: e.target.value
+    });
+  }
+
+  toggleTitleForm = () => {
+    this.setState({
+      showTitleForm: !this.state.showTitleForm
+    });
+  }
+
+  toggleJournal = () => {
+    this.setState({
+      showJournal: !this.state.showJournal,
+      headerVisible: false
+    })
+  }
+
+  saveHaiku = (e) => {
+    e.preventDefault();
+
+    let title, author;
+    if (this.state.titleInput === '') {
+      title = 'Untitled';
+    } else {
+      title = this.state.titleInput;
+    }
+
+    if (this.state.authorInput === '') {
+      author = 'Anonymous';
+    } else {
+      author = this.state.authorInput;
+    }
+
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const monthNumber = currentDate.getMonth();
+    const dayOfMonth = currentDate.getDate();
+
+    const date = `${monthNumber + 1}-${dayOfMonth}-${year}`;
+
+    const haiku = {
+      title: title,
+      author: author,
+      firstLine: this.state.firstLine,
+      secondLine: this.state.secondLine,
+      thirdLine: this.state.thirdLine,
+      date: date
+    };
+
+    const dbRef = firebase.database().ref();
+
+    dbRef.push(haiku);
+
+    this.toggleTitleForm();
+    this.toggleJournal();
+  }
+
+  displayJournalLog = (event) => {
+    const haiku = this.state.savedHaikus[event.target.value]
+    console.log(haiku)
+
+    this.setState({
+      activeHaiku: parseInt(event.target.value),
+      firstLine: haiku.firstLine,
+      secondLine: haiku.secondLine,
+      thirdLine: haiku.thirdLine,
+    })
+  }
 
   render() {
 
@@ -375,19 +476,24 @@ class App extends Component {
             this.state.headerVisible ?
             <Header
               createHaiku = {this.createHaiku}
+              showJournal = {this.toggleJournal}
             />
             :
             <div className="wrapper informationForUser">
               {
-                this.state.totalSyllables < 17 ?
+                this.state.totalSyllables < 17 && !this.state.showJournal ? 
                 <div className="syllableCounter">
                   <h3> Syllables {currentSyllables} / {maxSyllables}</h3>
                 </div>
                 : null
               }
-              <div className="messageToUser">
-                <p>{this.state.messageToUser}</p>
-              </div>
+              {
+                !this.state.showJournal ? 
+                  <div className="messageToUser">
+                    <p>{this.state.messageToUser}</p>
+                  </div>
+                : null
+              }
             </div>
           }
 
@@ -440,11 +546,48 @@ class App extends Component {
         }
 
         {
-          this.state.totalSyllables === 17 ?
+          this.state.totalSyllables === 17 && !this.state.showTitleForm && !this.state.showJournal ?
             <Restart
               createHaiku={this.createHaiku}
+              save={this.toggleTitleForm}
             />
             : null    
+        }
+        {
+          this.state.showTitleForm ?
+          <form action="submit" onSubmit={this.saveHaiku} className="titleForm wrapper">
+            <label htmlFor="titleInput" className="visuallyHidden">Title: </label>
+            <input onChange={this.handleTitleInput} type="text" id="titleInput" name="titleInput" placeholder="Title"/>
+            <label htmlFor="authorInput" className="visuallyHidden">Author: </label>
+            <input onChange={this.handleAuthorInput} type="text" id="authorInput" name="authorInput" placeholder="Author" />
+            <button type="submit">Save to Journal</button>
+          </form>
+          : null
+        }
+        {
+          this.state.showJournal ?
+            <div className="wrapper journalParent">
+              <h2>Journal</h2>
+              <ul className="journal">
+                {
+                  this.state.savedHaikus.map((haiku, index) => {
+                    return (
+                      <li key={haiku.title + Math.random()}>
+                        <button 
+                          onClick={this.displayJournalLog}
+                          className={ this.state.activeHaiku === index ? 'activeHaiku' : '' }
+                          value={index}
+                        >
+                          {haiku.title} by {haiku.author} - {haiku.date}
+                        </button>
+                      </li>
+                    )
+                  })
+                }
+              </ul>
+              <button className="journalWrite" onClick={this.createHaiku}>Write</button>
+            </div>
+          : null
         }
       </div>
 
