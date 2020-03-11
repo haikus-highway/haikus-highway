@@ -385,6 +385,13 @@ class App extends Component {
       author = this.state.authorInput;
     }
 
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const monthNumber = currentDate.getMonth();
+    const dayOfMonth = currentDate.getDate();
+
+    const date = `${monthNumber + 1}-${dayOfMonth}-${year}`;
+
     const firstLine = [];
     this.state.firstLine.forEach((item) => {
       firstLine.push(item.word);
@@ -404,7 +411,8 @@ class App extends Component {
       author: author,
       firstLine: firstLine,
       secondLine: secondLine,
-      thirdLine: thirdLine
+      thirdLine: thirdLine,
+      date: date
     };
 
     const dbRef = firebase.database().ref();
