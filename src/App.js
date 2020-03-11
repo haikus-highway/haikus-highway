@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import firebase from './firebase';
 import './App.css';
 import axios from 'axios';
@@ -362,7 +362,7 @@ class App extends Component {
       inputTextValue: '',
       formVisible: true,
       headerVisible: false,
-      messageToUser: 'Letter characters only, please.'
+      showJournal: false,
     })
   }
 
@@ -563,22 +563,26 @@ class App extends Component {
         }
         {
           this.state.showJournal ?
-            <ul className="journal">
-              {
-                this.state.savedHaikus.map((haiku, index) => {
-                  return (
-                    <li key={haiku.title + Math.random()}>
-                      <button 
-                        onClick={this.displayJournalLog}
-                        value={index}
-                      >
-                        {haiku.title} by {haiku.author} - {haiku.date}
-                      </button>
-                    </li>
-                  )
-                })
-              }
-            </ul>
+            <div className="wrapper journalParent">
+              <h2>Journal</h2>
+              <ul className="journal">
+                {
+                  this.state.savedHaikus.map((haiku, index) => {
+                    return (
+                      <li key={haiku.title + Math.random()}>
+                        <button 
+                          onClick={this.displayJournalLog}
+                          value={index}
+                        >
+                          {haiku.title} by {haiku.author} - {haiku.date}
+                        </button>
+                      </li>
+                    )
+                  })
+                }
+              </ul>
+              <button className="journalWrite" onClick={this.createHaiku}>Write</button>
+            </div>
           : null
         }
       </div>

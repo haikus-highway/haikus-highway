@@ -231,6 +231,21 @@ button{
   text-align: left;
 }
 
+.journal{
+  padding: 0;
+  overflow: auto;
+  max-height: 50vh;
+}
+
+.journalParent button{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.journalWrite{
+  font-weight: bold;
+}
+
 .autoCompleteSuggestions button:focus,
 .autoCompleteSuggestions button:hover {
   transform: none;
