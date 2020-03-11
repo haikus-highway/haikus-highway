@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "fafdbce97ee69f28655465209e1d4ad2",
+    "revision": "88a6bce8d8430205b4152acf14ddd67d",
     "url": "/haikus-highway/index.html"
   },
   {
-    "revision": "2b078c2e0b3c2c0107d7",
-    "url": "/haikus-highway/static/css/main.4c051015.chunk.css"
+    "revision": "6c951f2464b32bdc60ec",
+    "url": "/haikus-highway/static/css/main.94ae5580.chunk.css"
   },
   {
-    "revision": "4ff5791448dd6a08632a",
-    "url": "/haikus-highway/static/js/2.8716cdf0.chunk.js"
+    "revision": "6284d7030d9a3f022bff",
+    "url": "/haikus-highway/static/js/2.6ca5b0af.chunk.js"
   },
   {
     "revision": "07a707eba59e3e3ed782f77b31f34780",
-    "url": "/haikus-highway/static/js/2.8716cdf0.chunk.js.LICENSE.txt"
+    "url": "/haikus-highway/static/js/2.6ca5b0af.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "2b078c2e0b3c2c0107d7",
-    "url": "/haikus-highway/static/js/main.cab33002.chunk.js"
+    "revision": "6c951f2464b32bdc60ec",
+    "url": "/haikus-highway/static/js/main.10fc1ca3.chunk.js"
   },
   {
     "revision": "4ca0230651b243dc008e",
