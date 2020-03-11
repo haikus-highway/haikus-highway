@@ -349,7 +349,8 @@ button:focus:before{
     margin: 0 1.5vmax;
   }
 
-  .moreWordsButton{
+  .moreWordsButton,
+  .journalWrite{
     margin-bottom: 2vmax;
   }
 
