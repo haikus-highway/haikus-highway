@@ -39,8 +39,28 @@ class App extends Component {
       areRelatedWordsLoading: false,
       showTitleForm: false,
       titleInput: '',
-      authorInput: ''
+      authorInput: '',
+      savedHaikus: []
     };
+  }
+
+  componentDidMount() {
+    const dbRef = firebase.database().ref();
+
+    
+    dbRef.on('value', (response) => {
+      let savedHaikusArray = [];
+      
+      const savedHaikusRaw = response.val();
+      
+      for (let haiku in savedHaikusRaw) {
+        savedHaikusArray.push(savedHaikusRaw[haiku]);
+      }
+
+      this.setState({
+        savedHaikus: savedHaikusArray
+      });
+    });
   }
 
   handleFormSubmit = (e) => { //4
@@ -372,6 +392,7 @@ class App extends Component {
 
   saveHaiku = (e) => {
     e.preventDefault();
+
     let title, author;
     if (this.state.titleInput === '') {
       title = 'Untitled';
