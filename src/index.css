@@ -64,7 +64,6 @@ li {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  /* font-size: 20px; */
   justify-content: center;
   text-align: left;
 }
@@ -111,6 +110,7 @@ button{
   display: flex;
   align-items: center;
   border-radius: 10px;
+  font-size: 2.5vmax;
 }
 
 .form input{
@@ -175,6 +175,7 @@ button{
 .autoCompleteSuggestions {
   background-color: #cdc4b9;
   overflow: auto;
+  height: 50vh;
 }
 
 .leftHalf{
@@ -349,10 +350,6 @@ button:focus:before{
     padding-top: 10px;
   }
 
-  .rightHalf p {
-    font-size: 16px;
-  }
-
   .leftHalf{
     font-size: 2.5vmax;
   }
@@ -361,4 +358,10 @@ button:focus:before{
     margin-bottom: 5%;
   }
 
+}
+
+@media (max-width: 450px) {
+  .printedHaiku{
+    font-size: 2.5vmax;
+  }
 }
