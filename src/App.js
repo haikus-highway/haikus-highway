@@ -40,7 +40,8 @@ class App extends Component {
       showTitleForm: false,
       titleInput: '',
       authorInput: '',
-      savedHaikus: []
+      savedHaikus: [],
+      showJournal: false,
     };
   }
 
@@ -390,6 +391,13 @@ class App extends Component {
     });
   }
 
+  toggleJournal = () => {
+    this.setState({
+      showJournal: !this.state.showJournal,
+      headerVisible: false
+    })
+  }
+
   saveHaiku = (e) => {
     e.preventDefault();
 
@@ -413,26 +421,12 @@ class App extends Component {
 
     const date = `${monthNumber + 1}-${dayOfMonth}-${year}`;
 
-    const firstLine = [];
-    this.state.firstLine.forEach((item) => {
-      firstLine.push(item.word);
-    })
-
-    const secondLine = [];
-    this.state.secondLine.forEach((item) => {
-      secondLine.push(item.word);
-    })
-    const thirdLine = [];
-    this.state.thirdLine.forEach((item) => {
-      thirdLine.push(item.word);
-    })
-
     const haiku = {
       title: title,
       author: author,
-      firstLine: firstLine,
-      secondLine: secondLine,
-      thirdLine: thirdLine,
+      firstLine: this.state.firstLine,
+      secondLine: this.state.secondLine,
+      thirdLine: this.state.thirdLine,
       date: date
     };
 
@@ -440,6 +434,19 @@ class App extends Component {
 
     dbRef.push(haiku);
 
+    this.toggleTitleForm();
+    this.toggleJournal();
+  }
+
+  displayJournalLog = (event) => {
+    const haiku = this.state.savedHaikus[event.target.value]
+    console.log(haiku)
+
+    this.setState({
+      firstLine: haiku.firstLine,
+      secondLine: haiku.secondLine,
+      thirdLine: haiku.thirdLine,
+    })
   }
 
   render() {
@@ -466,19 +473,24 @@ class App extends Component {
             this.state.headerVisible ?
             <Header
               createHaiku = {this.createHaiku}
+              showJournal = {this.toggleJournal}
             />
             :
             <div className="wrapper informationForUser">
               {
-                this.state.totalSyllables < 17 ?
+                this.state.totalSyllables < 17 && !this.state.showJournal ? 
                 <div className="syllableCounter">
                   <h3> Syllables {currentSyllables} / {maxSyllables}</h3>
                 </div>
                 : null
               }
-              <div className="messageToUser">
-                <p>{this.state.messageToUser}</p>
-              </div>
+              {
+                !this.state.showJournal ? 
+                  <div className="messageToUser">
+                    <p>{this.state.messageToUser}</p>
+                  </div>
+                : null
+              }
             </div>
           }
 
@@ -531,7 +543,7 @@ class App extends Component {
         }
 
         {
-          this.state.totalSyllables === 17 && !this.state.showTitleForm?
+          this.state.totalSyllables === 17 && !this.state.showTitleForm && !this.state.showJournal ?
             <Restart
               createHaiku={this.createHaiku}
               save={this.toggleTitleForm}
@@ -547,6 +559,26 @@ class App extends Component {
             <input onChange={this.handleAuthorInput} type="text" id="authorInput" name="authorInput" placeholder="Author" />
             <button type="submit">Save to Journal</button>
           </form>
+          : null
+        }
+        {
+          this.state.showJournal ?
+            <ul className="journal">
+              {
+                this.state.savedHaikus.map((haiku, index) => {
+                  return (
+                    <li key={haiku.title + Math.random()}>
+                      <button 
+                        onClick={this.displayJournalLog}
+                        value={index}
+                      >
+                        {haiku.title} by {haiku.author} - {haiku.date}
+                      </button>
+                    </li>
+                  )
+                })
+              }
+            </ul>
           : null
         }
       </div>

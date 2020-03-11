@@ -13,7 +13,7 @@ class Header extends Component{
                             Write
                   </button>
 
-                        <button className="homeButton">
+                        <button className="homeButton" onClick={this.props.showJournal}>
                             Journal
                   </button>
                     </div>
