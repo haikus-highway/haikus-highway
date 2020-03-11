@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import firebase from './firebase';
 import './App.css';
 import axios from 'axios';
@@ -11,6 +11,8 @@ import RelatedWords from './Components/RelatedWords';
 import Restart from './Components/Restart';
 import HaikuImage from './assets/haiku-japanese.jpg';
 import SyncLoader from "react-spinners/SyncLoader";
+import TitleForm from './Components/TitleForm';
+import Journal from './Components/Journal';
 
 const override = `
   display: block;
@@ -555,38 +557,21 @@ class App extends Component {
         }
         {
           this.state.showTitleForm ?
-          <form action="submit" onSubmit={this.saveHaiku} className="titleForm wrapper">
-            <label htmlFor="titleInput" className="visuallyHidden">Title: </label>
-            <input onChange={this.handleTitleInput} type="text" id="titleInput" name="titleInput" placeholder="Title"/>
-            <label htmlFor="authorInput" className="visuallyHidden">Author: </label>
-            <input onChange={this.handleAuthorInput} type="text" id="authorInput" name="authorInput" placeholder="Author" />
-            <button type="submit">Save to Journal</button>
-          </form>
+            <TitleForm
+              saveHaiku={this.saveHaiku}
+              handleTitleInput={this.handleTitleInput}
+              handleAuthorInput={this.handleAuthorInput}
+            />
           : null
         }
         {
           this.state.showJournal ?
-            <div className="wrapper journalParent">
-              <h2>Journal</h2>
-              <ul className="journal">
-                {
-                  this.state.savedHaikus.map((haiku, index) => {
-                    return (
-                      <li key={haiku.title + Math.random()}>
-                        <button 
-                          onClick={this.displayJournalLog}
-                          className={ this.state.activeHaiku === index ? 'activeHaiku' : '' }
-                          value={index}
-                        >
-                          {haiku.title} by {haiku.author} - {haiku.date}
-                        </button>
-                      </li>
-                    )
-                  })
-                }
-              </ul>
-              <button className="journalWrite" onClick={this.createHaiku}>Write</button>
-            </div>
+            <Journal
+              activeHaiku={this.state.activeHaiku}
+              savedHaikus={this.state.savedHaikus}
+              displayJournalLog={this.displayJournalLog}
+              createHaiku={this.createHaiku}
+            />
           : null
         }
       </div>

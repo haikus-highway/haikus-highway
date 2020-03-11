@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Restart extends Component {
-    render() {
-        return (
-            <div className="restart wrapper">
-                <h2>Your haiku is complete!</h2>
-                <button onClick={this.props.createHaiku}>Write</button>
-                <button onClick={this.props.save}>Save</button>
-            </div>
-        )
-    }
+const Restart = (props) => {
+  return (
+    <div className="restart wrapper">
+      <h2>Your haiku is complete!</h2>
+      <button onClick={props.createHaiku}>Write</button>
+      <button onClick={props.save}>Save</button>
+    </div>
+  )
 }
 
 export default Restart;

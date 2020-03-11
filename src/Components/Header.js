@@ -1,26 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Header extends Component{
-    render(){
-        return(
-            <header>
-                <div className="wrapper">
-                    <h1>HaikYou</h1>
-                    <p>A haiku is a Japanese poem of seventeen syllables, in three lines of five, seven, and five, traditionally evoking images of the natural world. Create your own!</p>
+const Header = (props) => {
+  return(
+    <header>
+      <div className="wrapper">
+        <h1>HaikYou</h1>
+        <p>A haiku is a Japanese poem of seventeen syllables, in three lines of five, seven, and five, traditionally evoking images of the natural world. Create your own!</p>
 
-                    <div className="homeButtonDiv">
-                        <button className="homeButton" onClick={this.props.createHaiku}>
-                            Write
-                        </button>
+        <div className="homeButtonDiv">
+          <button className="homeButton" onClick={props.createHaiku}>
+              Write
+          </button>
 
-                        <button className="homeButton" onClick={this.props.showJournal}>
-                            Journal
-                        </button>
-                    </div>
-                </div>
-            </header>
-        )
-    }
+          <button className="homeButton" onClick={props.showJournal}>
+              Journal
+          </button>
+        </div>
+      </div>
+    </header>
+  )
 }
 
 export default Header;
