@@ -289,6 +289,10 @@ button:focus:before{
   padding: 0;
 }
 
+.activeHaiku {
+  color: #F6ADBF;
+}
+
 .titleForm {
   display: flex;
   flex-direction: column;

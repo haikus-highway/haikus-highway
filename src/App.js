@@ -42,6 +42,7 @@ class App extends Component {
       authorInput: '',
       savedHaikus: [],
       showJournal: false,
+      activeHaiku: false
     };
   }
 
@@ -363,6 +364,7 @@ class App extends Component {
       formVisible: true,
       headerVisible: false,
       showJournal: false,
+      activeHaiku: false
     })
   }
 
@@ -443,6 +445,7 @@ class App extends Component {
     console.log(haiku)
 
     this.setState({
+      activeHaiku: parseInt(event.target.value),
       firstLine: haiku.firstLine,
       secondLine: haiku.secondLine,
       thirdLine: haiku.thirdLine,
@@ -572,6 +575,7 @@ class App extends Component {
                       <li key={haiku.title + Math.random()}>
                         <button 
                           onClick={this.displayJournalLog}
+                          className={ this.state.activeHaiku === index ? 'activeHaiku' : '' }
                           value={index}
                         >
                           {haiku.title} by {haiku.author} - {haiku.date}
