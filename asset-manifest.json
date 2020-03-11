@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/haikus-highway/static/css/main.35f91e09.chunk.css",
-    "main.js": "/haikus-highway/static/js/main.4e687c4a.chunk.js",
-    "main.js.map": "/haikus-highway/static/js/main.4e687c4a.chunk.js.map",
+    "main.css": "/haikus-highway/static/css/main.2126c924.chunk.css",
+    "main.js": "/haikus-highway/static/js/main.e05cfbc1.chunk.js",
+    "main.js.map": "/haikus-highway/static/js/main.e05cfbc1.chunk.js.map",
     "runtime-main.js": "/haikus-highway/static/js/runtime-main.7e66e215.js",
     "runtime-main.js.map": "/haikus-highway/static/js/runtime-main.7e66e215.js.map",
     "static/js/2.8716cdf0.chunk.js": "/haikus-highway/static/js/2.8716cdf0.chunk.js",
     "static/js/2.8716cdf0.chunk.js.map": "/haikus-highway/static/js/2.8716cdf0.chunk.js.map",
     "index.html": "/haikus-highway/index.html",
-    "precache-manifest.2de78abf6b0f00d9900fd48e83869f26.js": "/haikus-highway/precache-manifest.2de78abf6b0f00d9900fd48e83869f26.js",
+    "precache-manifest.187e49a68f8d04f3ee2fb428889f6594.js": "/haikus-highway/precache-manifest.187e49a68f8d04f3ee2fb428889f6594.js",
     "service-worker.js": "/haikus-highway/service-worker.js",
-    "static/css/main.35f91e09.chunk.css.map": "/haikus-highway/static/css/main.35f91e09.chunk.css.map",
+    "static/css/main.2126c924.chunk.css.map": "/haikus-highway/static/css/main.2126c924.chunk.css.map",
     "static/js/2.8716cdf0.chunk.js.LICENSE.txt": "/haikus-highway/static/js/2.8716cdf0.chunk.js.LICENSE.txt",
     "static/media/haiku-japanese.jpg": "/haikus-highway/static/media/haiku-japanese.d2949f10.jpg",
     "static/media/index.css": "/haikus-highway/static/media/japanese-flowers.1a518315.jpg"
@@ -18,7 +18,7 @@
   "entrypoints": [
     "static/js/runtime-main.7e66e215.js",
     "static/js/2.8716cdf0.chunk.js",
-    "static/css/main.35f91e09.chunk.css",
-    "static/js/main.4e687c4a.chunk.js"
+    "static/css/main.2126c924.chunk.css",
+    "static/js/main.e05cfbc1.chunk.js"
   ]
 }
