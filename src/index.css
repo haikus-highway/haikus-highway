@@ -43,10 +43,6 @@ body{
   width: 80%;
 }
 
-li {
-  list-style-type: none;
-}
-
 .App{
   display: flex;
   flex-direction: column;
@@ -56,16 +52,6 @@ li {
   font-size: 2vmax;
   flex-direction: row-reverse;
   justify-content: space-between;
-}
-
-.rightHalf{
-  background: #545152;
-  width: 50vw;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: left;
 }
 
 h1{
@@ -80,12 +66,9 @@ h2{
   font-family: 'Merienda One', cursive;
 }
 
-a{
-  text-decoration: none;
-  color: white;
+li {
+  list-style: none;
 }
-
-/* Home styling */
 
 button{
   border: none;
@@ -93,8 +76,27 @@ button{
   color: white;
   transition: all 0.7s;
   background: transparent;
+  position: relative;
+  transition: 0.3s;
+  padding: 10px;
 }
 
+a{
+  text-decoration: none;
+  color: white;
+}
+
+/* Right half styling begins here */
+
+.rightHalf{
+  background: #545152;
+  width: 50vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
 
 .homeButton,
 .restart button{
@@ -104,7 +106,7 @@ button{
   margin-right: 30px;
 }
 
-/* Form styling */
+/* Word input form styling */
 
 .form{
   display: flex;
@@ -120,98 +122,12 @@ button{
   background-color: transparent;
 }
 
-.form input:focus{
-  color: white;
-}
-
-/* List styling */
-
-.relatedWordsFlex{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.relatedWords{
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  margin: 20px 0;
-  padding: 0;
-}
-
-.relatedWords div{
-  margin: 20px;
-}
-
-.relatedWords li{
-  list-style: none;
-  margin-right: 30px;
-}
-
-.relatedWords button {
-  padding: 20px 0;
-}
-
-.moreWordsButton{
-  align-self: flex-end;
-}
-
-.moreWordsButton button{
-  padding-left: 0;
-}
-
-/* Left half styling */
-
-.printedHaiku{
-  color: #545152;
-  background: rgba(255,255,255, 0.75);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: auto;
-  
-}
+/* Auto-complete list styling */
 
 .autoCompleteSuggestions {
   background-color: #cdc4b9;
   overflow: auto;
   height: 50vh;
-}
-
-.leftHalf{
-  background: url(./assets/japanese-flowers.jpg);
-  background-position: cover;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 50vw;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
-.line{
-  margin: 0;
-  line-height: 70px;
-}
-
-.underline {
-  font-style: italic;
-  color: #545152;
-}
-
-.japanese{
-  color: #cdc4b942;
-  margin: 0 auto;
-  width: 40vmax;
-  max-width: 450px;
-  position: absolute;
-}
-
-.restart{
-  padding: 7vmax;
-  outline: 0.5px dashed #bcbca6;
-  text-align: center;
 }
 
 .autoCompleteSuggestions ul{
@@ -231,6 +147,78 @@ button{
   text-align: left;
 }
 
+.line{
+  margin: 0;
+  line-height: 70px;
+}
+
+.underline {
+  font-style: italic;
+  color: #545152;
+}
+
+/* Related words list styling */
+
+.relatedWordsFlex{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.relatedWords{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 20px 0;
+  padding: 0;
+}
+
+.relatedWords div{
+  margin: 20px;
+}
+
+.relatedWords li{
+  margin-right: 30px;
+}
+
+.relatedWords button {
+  padding: 20px 0;
+}
+
+.moreWordsButton{
+  align-self: flex-end;
+}
+
+.moreWordsButton button,
+.journalParent button{
+  padding-left: 0;
+}
+
+/* Restart page styling */
+
+.restart{
+  padding: 7vmax;
+  outline: 0.5px dashed #bcbca6;
+  text-align: center;
+}
+
+/* Title/author form styling */
+
+.titleForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titleForm input {
+  margin-bottom: 2vmax;
+  border: none;
+  color: white;
+  background-color: transparent;
+  text-align: center;
+}
+
+/* Journal styling */
+
 .journal{
   padding: 0;
   overflow: auto;
@@ -238,13 +226,57 @@ button{
 }
 
 .journalParent button{
-  padding-left: 0;
   padding-right: 0;
 }
 
 .journalWrite{
   font-weight: bold;
 }
+
+.activeHaiku {
+  color: #F6ADBF;
+}
+
+/* Right half styling ends here */
+
+
+
+/* Left half styling begins here */
+
+.leftHalf{
+  background: url(./assets/japanese-flowers.jpg);
+  background-position: cover;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.japanese{
+  color: #cdc4b942;
+  margin: 0 auto;
+  width: 40vmax;
+  max-width: 450px;
+  position: absolute;
+}
+
+.printedHaiku{
+  color: #545152;
+  background: rgba(255,255,255, 0.75);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+}
+
+/* Left half styling ends here */
+
+
+
+/* Pseudoelements */
 
 .autoCompleteSuggestions button:focus,
 .autoCompleteSuggestions button:hover {
@@ -256,12 +288,6 @@ button{
 .autoCompleteSuggestions li:hover {
   background-color: #545152;
   color: white;
-}
-
-button{
-  position: relative;
-  transition: 0.3s;
-  padding: 10px;
 }
 
 button:before{
@@ -281,11 +307,9 @@ button:hover,
 button:focus,
 button:active {
   color: #F6ADBF;
-  cursor: url(./assets/favicon-32x32.png), auto;
 }
 
 input:hover{
-  /* cursor: url(./assets/favicon.ico), auto; */
   cursor: text;
 }
         
@@ -295,23 +319,7 @@ button:focus:before{
   padding: 0;
 }
 
-.activeHaiku {
-  color: #F6ADBF;
-}
 
-.titleForm {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.titleForm input {
-  margin-bottom: 2vmax;
-  border: none;
-  color: white;
-  background-color: transparent;
-  text-align: center;
-}
 
 /* Media Queries */
 
@@ -334,17 +342,19 @@ button:focus:before{
     flex-direction: column;
     align-items: center;
   }
-
+  
   .leftHalf {
-    min-height: 50vh;
     height: 50vh;
-    width: 100%;
   }
   
   .rightHalf {
+    text-align: center;
+  }
+  
+  .leftHalf,
+  .rightHalf{
     min-height: 50vh;
     width: 100%;
-    text-align: center;
   }
 
   .relatedWords{
@@ -356,6 +366,7 @@ button:focus:before{
   }
 
   .moreWordsButton,
+  .restart,
   .journalWrite{
     margin-bottom: 2vmax;
   }
@@ -387,25 +398,22 @@ button:focus:before{
   }
 }
 
-
-@media (max-width: 600px){
+@media(max-width: 600px){
   h1 {
     font-size: 5vmax;
-    padding-top: 10px;
   }
 
   .leftHalf{
     font-size: 2.5vmax;
   }
 
-  .restart{
-    margin-bottom: 5%;
-  }
-
-}
-
-@media (max-width: 450px) {
   .printedHaiku{
     font-size: 2.5vmax;
+  }
+}
+
+@media(max-width: 450px){
+  .printedHaiku{
+    font-size: 2.1vmax;
   }
 }
