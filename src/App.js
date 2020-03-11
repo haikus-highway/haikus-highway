@@ -540,11 +540,11 @@ class App extends Component {
         }
         {
           this.state.showTitleForm ?
-          <form action="submit" onSubmit={this.saveHaiku}>
-            <label htmlFor="titleInput">Title: </label>
-            <input onChange={this.handleTitleInput} type="text" id="titleInput" name="titleInput" />
-            <label htmlFor="authorInput">Author: </label>
-            <input onChange={this.handleAuthorInput} type="text" id="authorInput" name="authorInput" />
+          <form action="submit" onSubmit={this.saveHaiku} className="titleForm wrapper">
+            <label htmlFor="titleInput" className="visuallyHidden">Title: </label>
+            <input onChange={this.handleTitleInput} type="text" id="titleInput" name="titleInput" placeholder="Title"/>
+            <label htmlFor="authorInput" className="visuallyHidden">Author: </label>
+            <input onChange={this.handleAuthorInput} type="text" id="authorInput" name="authorInput" placeholder="Author" />
             <button type="submit">Save to Journal</button>
           </form>
           : null

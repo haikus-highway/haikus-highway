@@ -274,6 +274,20 @@ button:focus:before{
   padding: 0;
 }
 
+.titleForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titleForm input {
+  margin-bottom: 2vmax;
+  border: none;
+  color: white;
+  background-color: transparent;
+  text-align: center;
+}
+
 /* Media Queries */
 
 @media(max-width: 800px){
