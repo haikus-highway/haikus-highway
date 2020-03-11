@@ -23,10 +23,9 @@ class App extends Component {
   constructor() {
     super();
 
-    // 1
     this.state = {
-      userInput: '', //2,
-      firstLine: [], //3
+      userInput: '',
+      firstLine: [],
       secondLine: [],
       thirdLine: [],
       allRelatedWords: [],
@@ -67,15 +66,14 @@ class App extends Component {
     });
   }
 
-  handleFormSubmit = (e) => { //4
+  handleFormSubmit = (e) => {
     e.preventDefault();
 
-    axios({ //5
+    axios({
       url: `https://api.datamuse.com/words?sp=${this.state.userInput}&md=s`,
       method: 'GET',
       responseType: 'json',
     }).then((response) => {
-      // Recall: response = data received from AXIOS call
       const totalSyllablesSoFar = this.getSyllablesPerLine(this.state.currentLine);
       const maxSyllablesAllowed = this.checkMaxSyllablesAllowed(totalSyllablesSoFar);
 
@@ -84,7 +82,7 @@ class App extends Component {
         let firstLineCopy = [...this.state.firstLine];
         let secondLineCopy = [...this.state.secondLine];
         let thirdLineCopy = [...this.state.thirdLine];
-        let currentLineCopy = [...this.state.currentLine]; //6
+        let currentLineCopy = [...this.state.currentLine];
 
         if (response.data[0].numSyllables === maxSyllablesAllowed) {
           if (this.state.totalSyllables <= 5) {
@@ -102,16 +100,14 @@ class App extends Component {
           }
         } else {
           currentLineCopy.push(
-            // Recall: .push() adds items into our currentLineCopy array
-            {//7
+            {
               word: this.state.userInput,
               numSyllables: response.data[0].numSyllables
             }
           );
         }
   
-  
-        this.setState({ //8
+        this.setState({
           firstLine: firstLineCopy,
           secondLine: secondLineCopy,
           thirdLine: thirdLineCopy,
@@ -120,7 +116,6 @@ class App extends Component {
           formVisible: false,
           messageToUser: 'Choose the next word.'
         },
-          //9
           () => {
             this.getRelatedWords(this.state.userInput);
           }
@@ -138,18 +133,16 @@ class App extends Component {
           messageToUser: 'That word is too many syllables. Please try another.'
         });
       }
-    }).catch((error) => {
+    }).catch(() => {
       this.setState({
         userInput: '',
         inputTextValue: '',
         messageToUser: "That word doesn't seem to exist. Please try another.",
         suggestions: []
       });
-
     });
   }
 
-  //10
   getRelatedWords = (word) => {
     this.setState({areRelatedWordsLoading: true}, () => {
       axios({
@@ -157,9 +150,7 @@ class App extends Component {
         method: 'GET',
         responseType: 'json',
       }).then((response) => {
-        //11
 
-        //12
         if (response.data.length === 0) {
           this.setState({
             formVisible: true,
@@ -206,35 +197,24 @@ class App extends Component {
 
       // Remove random index from relatedWordsCopy array to prevent duplicates in randomWords array
       removeFromArray(relatedWordsCopy[randomIndex], relatedWordsCopy);
-
     }
-
     return randomWords
   }
 
   filterResults = (results) => {
-    //13
-
     const totalSyllablesSoFar = this.getSyllablesPerLine(this.state.currentLine);
 
-    //14
     const maxSyllablesAllowed = this.checkMaxSyllablesAllowed(totalSyllablesSoFar);
-
-    //15
 
     const regex = /[a-z]/g;
 
-    //16
     const filteredResults = results.filter((item) => {
       if (item.numSyllables <= maxSyllablesAllowed && item.word.match(regex)) {
-        //17
         return item;
       } else {
         return false;
       }
     });
-
-    // console.log(filteredResults)
 
     let randomWords;
     let formVisible = false;
@@ -262,7 +242,6 @@ class App extends Component {
   getSyllablesPerLine = (line) => {
     // Line will be an array that is received from state
 
-    // initialize a sum variable to 0
     let numberOfSyllablesLine = 0;
     // Loop through each item in the line array provided
     line.forEach((item) => {
@@ -308,7 +287,6 @@ class App extends Component {
     });
   }
 
-  // Word onClick function
   wordChosen = (item) => {
 
     let firstLineCopy = [...this.state.firstLine];
@@ -366,7 +344,9 @@ class App extends Component {
       formVisible: true,
       headerVisible: false,
       showJournal: false,
-      activeHaiku: false
+      activeHaiku: false,
+      titleInput: '',
+      authorInput: '',
     })
   }
 
@@ -444,7 +424,6 @@ class App extends Component {
 
   displayJournalLog = (event) => {
     const haiku = this.state.savedHaikus[event.target.value]
-    console.log(haiku)
 
     this.setState({
       activeHaiku: parseInt(event.target.value),
@@ -470,9 +449,7 @@ class App extends Component {
     }
 
     return (
-
       <div className="App">
-
         <div className="rightHalf">
           {
             this.state.headerVisible ?
@@ -527,53 +504,53 @@ class App extends Component {
             : null
           }
 
-        {
-          this.state.areRelatedWordsLoading && showPreloader ?
-            <SyncLoader
-              size={15}
-              color={"#fff"}
-              css={override}
-            />
-          :
-          
-          this.state.totalSyllables < 17 ?
-            <RelatedWords
-              tenRelatedWords={this.state.tenRelatedWords}
-              totalSyllables={this.state.totalSyllables}
-              wordChosen={this.wordChosen}
-              moreWords={this.moreWords}
-            />
-          : null
-          
-        }
+          {
+            this.state.areRelatedWordsLoading && showPreloader ?
+              <SyncLoader
+                size={15}
+                color={"#fff"}
+                css={override}
+              />
+            :
+            
+            this.state.totalSyllables < 17 ?
+              <RelatedWords
+                tenRelatedWords={this.state.tenRelatedWords}
+                totalSyllables={this.state.totalSyllables}
+                wordChosen={this.wordChosen}
+                moreWords={this.moreWords}
+              />
+            : null
+            
+          }
 
-        {
-          this.state.totalSyllables === 17 && !this.state.showTitleForm && !this.state.showJournal ?
-            <Restart
-              createHaiku={this.createHaiku}
-              save={this.toggleTitleForm}
-            />
-            : null    
-        }
-        {
-          this.state.showTitleForm ?
-            <TitleForm
-              saveHaiku={this.saveHaiku}
-              handleTitleInput={this.handleTitleInput}
-              handleAuthorInput={this.handleAuthorInput}
-            />
-          : null
-        }
-        {
-          this.state.showJournal ?
-            <Journal
-              activeHaiku={this.state.activeHaiku}
-              savedHaikus={this.state.savedHaikus}
-              displayJournalLog={this.displayJournalLog}
-              createHaiku={this.createHaiku}
-            />
-          : null
-        }
+          {
+            this.state.totalSyllables === 17 && !this.state.showTitleForm && !this.state.showJournal ?
+              <Restart
+                createHaiku={this.createHaiku}
+                save={this.toggleTitleForm}
+              />
+              : null    
+          }
+          {
+            this.state.showTitleForm ?
+              <TitleForm
+                saveHaiku={this.saveHaiku}
+                handleTitleInput={this.handleTitleInput}
+                handleAuthorInput={this.handleAuthorInput}
+              />
+            : null
+          }
+          {
+            this.state.showJournal ?
+              <Journal
+                activeHaiku={this.state.activeHaiku}
+                savedHaikus={this.state.savedHaikus}
+                displayJournalLog={this.displayJournalLog}
+                createHaiku={this.createHaiku}
+              />
+            : null
+          }
       </div>
 
       <div className="leftHalf">
