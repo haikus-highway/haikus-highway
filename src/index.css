@@ -21,6 +21,9 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
 
 .visuallyHidden:not(:focus):not(:active) { position: absolute; width: 1px; height: 1px; margin: -1px;border: 0;padding: 0;white-space: nowrap;clip-path: inset(100%);clip: rect(00 0 0);overflow: hidden;}
 
+
+/* General styling */
+
 img{
   width: 100%;
   height: auto;
@@ -31,7 +34,7 @@ body{
   padding: 0;
   font-family: 'Barlow', sans-serif;
   line-height: 1.6;
-  letter-spacing: 1.5px;
+  letter-spacing: 0.15vmax;
 }
 
 .wrapper{
@@ -49,9 +52,8 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  
   color: white;
-  font-size: 30px;
+  font-size: 2vmax;
   flex-direction: row-reverse;
   justify-content: space-between;
 }
@@ -62,7 +64,7 @@ li {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-size: 20px;
+  /* font-size: 20px; */
   justify-content: center;
   text-align: left;
 }
@@ -71,7 +73,7 @@ h1{
   font-family: 'Merienda One', cursive;
   margin: 0;
   font-size: 6vmax;
-  text-shadow: 5px 5px #cdc4b9;
+  text-shadow: 0.25vmax 0.25vmax #cdc4b9;
 }
 
 h2{
@@ -282,7 +284,8 @@ button:focus:before{
     text-shadow: 2px 2px #cdc4b9;
   }
 
-  .homeButton{
+  .homeButton,
+  .restart button{
     margin: 0 15px;
   }
 
@@ -299,24 +302,39 @@ button:focus:before{
   }
   
   .rightHalf {
-    height: 50vh;
     min-height: 50vh;
     width: 100%;
     text-align: center;
+  }
+
+  .relatedWords{
+    margin-top: 0;
+  }
+
+  .relatedWords li{
+    margin: 0 1.5vmax;
+  }
+
+  .moreWordsButton{
+    margin-bottom: 2vmax;
   }
 
   input{
     text-align: center;
   }
 
-.autoCompleteSuggestions {
-  position: absolute;
-  width: 100%;
-  top: 50%;
-}
+  .autoCompleteSuggestions {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+  }
 
   .relatedWords{
     justify-content: center;
+  }
+
+  .printedHaiku{
+    font-size: 3.5vmax;
   }
   
   .japanese {
