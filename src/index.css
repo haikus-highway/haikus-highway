@@ -281,11 +281,12 @@ button:hover,
 button:focus,
 button:active {
   color: #F6ADBF;
-  cursor: url(./assets/favicon.ico), auto;
+  cursor: url(./assets/favicon-32x32.png), auto;
 }
 
 input:hover{
-  cursor: url(./assets/favicon.ico), auto;
+  /* cursor: url(./assets/favicon.ico), auto; */
+  cursor: text;
 }
         
 button:hover:before,
