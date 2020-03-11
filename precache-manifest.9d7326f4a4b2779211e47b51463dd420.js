@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a8b3e0c533513eb6f671a1babc7c7da5",
+    "revision": "4e11a86acd44bbda8ef8816ea1e931f4",
     "url": "/haikus-highway/index.html"
   },
   {
-    "revision": "91c2db7355567ec9881f",
-    "url": "/haikus-highway/static/css/main.2126c924.chunk.css"
+    "revision": "ecbd103ccb61ee87d11c",
+    "url": "/haikus-highway/static/css/main.83c88c8e.chunk.css"
   },
   {
     "revision": "4ff5791448dd6a08632a",
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/haikus-highway/static/js/2.8716cdf0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "91c2db7355567ec9881f",
+    "revision": "ecbd103ccb61ee87d11c",
     "url": "/haikus-highway/static/js/main.e05cfbc1.chunk.js"
   },
   {
