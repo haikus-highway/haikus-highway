@@ -184,8 +184,8 @@ a{
   padding: 20px 0;
 }
 
-.moreWordsButton{
-  align-self: flex-end;
+.moreWordsButton button{
+  font-weight: bold;
 }
 
 .moreWordsButton button,
