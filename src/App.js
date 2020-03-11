@@ -37,6 +37,9 @@ class App extends Component {
       inputTextValue: '',
       messageToUser: 'Letter characters only, please.',
       areRelatedWordsLoading: false,
+      showTitleForm: false,
+      titleInput: '',
+      authorInput: ''
     };
   }
 
@@ -349,7 +352,66 @@ class App extends Component {
     })
   }
 
-  
+  handleTitleInput = (e) => {
+    this.setState({
+      titleInput: e.target.value
+    });
+  }
+
+  handleAuthorInput = (e) => {
+    this.setState({
+      authorInput: e.target.value
+    });
+  }
+
+  toggleTitleForm = () => {
+    this.setState({
+      showTitleForm: !this.state.showTitleForm
+    });
+  }
+
+  saveHaiku = (e) => {
+    e.preventDefault();
+    let title, author;
+    if (this.state.titleInput === '') {
+      title = 'Untitled';
+    } else {
+      title = this.state.titleInput;
+    }
+
+    if (this.state.authorInput === '') {
+      author = 'Anonymous';
+    } else {
+      author = this.state.authorInput;
+    }
+
+    const firstLine = [];
+    this.state.firstLine.forEach((item) => {
+      firstLine.push(item.word);
+    })
+
+    const secondLine = [];
+    this.state.secondLine.forEach((item) => {
+      secondLine.push(item.word);
+    })
+    const thirdLine = [];
+    this.state.thirdLine.forEach((item) => {
+      thirdLine.push(item.word);
+    })
+
+    const haiku = {
+      title: title,
+      author: author,
+      firstLine: firstLine,
+      secondLine: secondLine,
+      thirdLine: thirdLine
+    };
+
+    const dbRef = firebase.database().ref();
+
+    dbRef.push(haiku);
+
+  }
 
   render() {
 
@@ -440,11 +502,23 @@ class App extends Component {
         }
 
         {
-          this.state.totalSyllables === 17 ?
+          this.state.totalSyllables === 17 && !this.state.showTitleForm?
             <Restart
               createHaiku={this.createHaiku}
+              save={this.toggleTitleForm}
             />
             : null    
+        }
+        {
+          this.state.showTitleForm ?
+          <form action="submit" onSubmit={this.saveHaiku}>
+            <label htmlFor="titleInput">Title: </label>
+            <input onChange={this.handleTitleInput} type="text" id="titleInput" name="titleInput" />
+            <label htmlFor="authorInput">Author: </label>
+            <input onChange={this.handleAuthorInput} type="text" id="authorInput" name="authorInput" />
+            <button type="submit">Save to Journal</button>
+          </form>
+          : null
         }
       </div>
 
