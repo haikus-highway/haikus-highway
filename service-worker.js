@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/haikus-highway/precache-manifest.9d7326f4a4b2779211e47b51463dd420.js"
+  "/haikus-highway/precache-manifest.868d32b57ef41648360537ec2661fd3e.js"
 );
 
 self.addEventListener('message', (event) => {
